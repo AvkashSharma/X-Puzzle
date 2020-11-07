@@ -50,8 +50,8 @@ class Puzzle:
 
         diagonalMove = self.moveDiagonal(zero)
         if diagonalMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, diagonalMove), cost=3))
-
+            for diag in diagonalMove:
+                moves.append(Puzzle(puzzle=self.swapPosition(zero, diag), cost=3))
 
         for m in  moves:
             print(m.puzzle)
@@ -88,29 +88,53 @@ class Puzzle:
         if pos[1]!=self.col-1: 
             return self.getPosition(self.puzzle[pos[0]][pos[1]+1])
         else: return None
+
+    def moveWrapper(self, pos):
+        if self.isCorner(pos):
+            if pos[1] == 0:
+                return self.getPosition(self.puzzle[pos[0]][self.col-1])
+            elif pos[1] == self.col-1:
+                return self.getPosition(self.puzzle[pos[0]][0])
+        return None
+
 # todo
     def moveDiagonal(self, pos):
+        if self.isCorner(pos):
+            # r1, c1 - adjacent
+            # r2, c2 - opposite corner
+            r1= c1= r2= c2 = 0
+
+            if pos[0] == 0:
+                r1 = 1
+                r2 = self.row -1
+            elif pos[0] == self.row-1:
+                r1 = self.col-2
+
+            if pos[1] == 0:
+                c1 = 1
+                c2 =self.col -1
+            elif pos[1] == self.row-1:
+                c1 = self.col-2
+
+            return np.array([[c1, r1], [c2, r2]])
         return None
-# todo
-    def moveWrapper(self, pos):
-        return None
-
-    # def isCorner(self, pos):
-    #     r = pos[0]
-    #     c = pos[1]
-
-    #     print(str(r) + ","+str(c))
-    #     if (pos == [0,0]).all():
-    #         print(str(r) + ","+str(c))
-    #     elif (pos == [self.row - 1,0]).all():
-    #         print(str(r) + ","+str(c))
-    #     elif (pos == [0 , self.col-1]).all():
-    #         print(str(r) + ","+str(c))
-    #     elif (pos == [self.row - 1, self.col -1]).all():
-    #         print(str(r) + ","+str(c))
 
 
-input = "0 6 2 7 4 1 3 5"
+    def isCorner(self, pos):
+        r = pos[0]
+        c = pos[1]
+
+        if (pos == [0,0]).all():
+            return True
+        elif (pos == [self.row - 1,0]).all():
+            return True
+        elif (pos == [0 , self.col-1]).all():
+            return True
+        elif (pos == [self.row - 1, self.col -1]).all():
+            return True
+
+
+input = "4 2 3 1 5 6 7 0"
 
 puzzle = Puzzle(input=input, cost=0)
 puzzle.print()
