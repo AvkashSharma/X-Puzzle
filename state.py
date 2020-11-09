@@ -26,7 +26,6 @@ class State:
         else:
             self.h = h
         
-        
     def print(self):
         print(self.puzzle)
         print("G(N): "+ str(self.g))
@@ -60,8 +59,6 @@ class State:
         if diagonalMove is not None:
             for diag in diagonalMove:
                 moves.append(State(puzzle=self.swapPosition(zero, diag), g=3, heuristic=self.heuristic))
-
-        
 
         return moves
 
@@ -166,32 +163,4 @@ class State:
         else:
             return 1
         print('Heuristic 2')
-
-
-#Below is just a sample test
-
-# Visited State
-input = "4 2 3 1 5 6 7 0"
-input2 = "1 2 3 4 5 6 7 0"
-input3 = "1 2 3 4 5 6 0 7"
-
-state = State(input=input, heuristic="h2")
-state.print()
-
-goalState1 = State(input='1 2 3 4 5 6 7 0')
-goalState2 = State(input='1 3 5 7 2 4 6 0')
-
-# Is It Goal State
-if (state.puzzle == goalState1.puzzle).all():
-    print('goal1 found')
-elif (state.puzzle == goalState2.puzzle).all():
-    print('goal2 found')
-else:
-    # Open List
-    moves = state.getMoves()
-    for m in  moves:
-        print(m.puzzle)
-        print("G(N): "+ str(m.g))
-        print("H(N): "+ str(m.h))
-    
 
