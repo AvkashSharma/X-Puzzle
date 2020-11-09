@@ -1,13 +1,13 @@
 from math import cos
 import numpy as np
-import numpy
 
 class Puzzle:
-
-
-    def __init__(self, input="", cost=0, puzzle=None):
+    def __init__(self, input="", puzzle=None, f=0, h=0, g=0):
         self.row = 2
         self.col = 4
+        self.f = f
+        self.h = h
+        self.g = g
 
         if input!='':
             inputList = input.split(" ")
@@ -16,45 +16,44 @@ class Puzzle:
         
         if puzzle is not None:
             self.puzzle = puzzle
-
-        self.cost = cost
         
     def print(self):
         print(self.puzzle)
-        print("Cost: "+ str(self.cost))
+        print("Cost: "+ str(self.g))
 
     def getMoves(self):
         moves = []
         zero = self.getPosition('0')
-        # self.isCorner(zero)
 
         downMove = self.moveDown(zero)
         if downMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, downMove), cost=1))
+            moves.append(Puzzle(puzzle=self.swapPosition(zero, downMove), g=1))
 
         upMove = self.moveUp(zero)
         if upMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, upMove), cost=1))
+            moves.append(Puzzle(puzzle=self.swapPosition(zero, upMove), g=1))
 
         leftMove = self.moveLeft(zero)
         if leftMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, leftMove), cost=1))
+            moves.append(Puzzle(puzzle=self.swapPosition(zero, leftMove), g=1))
 
         rightMove = self.moveRight(zero)
         if rightMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, rightMove), cost=1))
+            moves.append(Puzzle(puzzle=self.swapPosition(zero, rightMove), g=1))
         
         wrapMove = self.moveWrapper(zero)
         if wrapMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, wrapMove), cost=2))
+            moves.append(Puzzle(puzzle=self.swapPosition(zero, wrapMove), g=2))
 
         diagonalMove = self.moveDiagonal(zero)
         if diagonalMove is not None:
             for diag in diagonalMove:
-                moves.append(Puzzle(puzzle=self.swapPosition(zero, diag), cost=3))
+                moves.append(Puzzle(puzzle=self.swapPosition(zero, diag), g=3))
 
-        for m in  moves:
-            print(m.puzzle)
+        # for m in  moves:
+        #     print(m.puzzle)
+
+        return moves
 
 # get position
     def getPosition(self, pos):
@@ -97,7 +96,6 @@ class Puzzle:
                 return self.getPosition(self.puzzle[pos[0]][0])
         return None
 
-# todo
     def moveDiagonal(self, pos):
         if self.isCorner(pos):
             # r1, c1 - adjacent
@@ -133,10 +131,11 @@ class Puzzle:
         elif (pos == [self.row - 1, self.col -1]).all():
             return True
 
+    def h0(self):
+        print('Heuristic 0')
 
-input = "4 2 3 1 5 6 7 0"
+    def h1(self):
+        print('Heuristic 1')
 
-puzzle = Puzzle(input=input, cost=0)
-puzzle.print()
-puzzle.getMoves()
-
+    def h2(self):
+        print('Heuristic 2')

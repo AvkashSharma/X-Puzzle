@@ -2,6 +2,9 @@
 # puzzle dimension must be scalable
 
 # state = seqence of number (ex: 3, 0, 1, 4, 2, 6, 5, 7)
+from ast import NodeTransformer
+
+
 3 0 1 4 2 6 5 7
 
 2x4 = 8 in total
@@ -70,3 +73,14 @@ Close: [3 0 1 4 2 6 5 7]
 # search functions
 
 # input output
+
+# node
+# parent node
+# puzzle
+# cost
+# f(n)
+# h(n)
+
+
+
+# star
