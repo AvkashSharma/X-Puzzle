@@ -1,11 +1,5 @@
 import numpy as np
-from puzzle import Puzzle
-
-class Node:
-    def __init__(self, parent=None, puzzle=None, cost=0):
-        self.parent = parent
-        self.puzzle = puzzle
-        self.cost = cost
+from state import State
 
 def getItemFromList(arr, puzzle):
     for a in arr:
@@ -18,10 +12,10 @@ class Astar:
 
     def __init__(self, initial):
         # intitalize lists
-        np.array(self.openList, dtype=Puzzle)
-        np.array(self.closedList, dtype=Puzzle)
-        self.goal1 = Puzzle(input='1 2 3 4 5 6 7 0', g=0, f=0)
-        self.goal2 = Puzzle(input='1 3 5 7 2 4 6 0', g=0, f=0)
+        np.array(self.openList, dtype=State)
+        np.array(self.closedList, dtype=State)
+        self.goal1 = State(input='1 2 3 4 5 6 7 0', g=0, f=0)
+        self.goal2 = State(input='1 3 5 7 2 4 6 0', g=0, f=0)
         
         self.initial = initial
         self.openList.append(self.initial)
@@ -35,7 +29,7 @@ class Astar:
             # print('openList')
             # print(self.openList)
             # print('closedList')
-            print(self.closedList)
+            # print(self.closedList)
             for c in self.closedList:
                 c.print()
 
@@ -66,9 +60,10 @@ class Astar:
                 # g = currentNode.g + distance between child and current
                 child.g = currentNode.g + child.g
                 # h = huristic function
-                child.h = 0
+                child.h = child.h0()
                 # f = g+h
                 child.f = child.g + child.h
+                print(child.f)
 
                 # check if child in openList
                 if any((x.puzzle == child.puzzle).all() for x in self.openList):
@@ -86,8 +81,8 @@ class Astar:
             # break;
             i = i+1
             
-            # if i == 20:
-            #     break;
+            if i == 10:
+                break;
         # sort the list
 
 
@@ -108,10 +103,10 @@ class Astar:
 
 
 
-input = "1 2 3 4 0 5 6 7"
-# input = '1 3 5 7 2 4 6 0'
+# input = "1 2 3 4 0 5 6 7"
+input = '1 0 3 6 5 2 7 4'
 
-puzzle = Puzzle(input=input, g=0, f=0)
+puzzle = State(input=input, g=0, f=0)
 # print(puzzle.h0())
 # puzzle.print()
 # puzzle.getMoves()
