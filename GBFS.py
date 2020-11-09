@@ -47,20 +47,32 @@ openList.append(state)
 
 closedList = []
 
+def stateExists(stateToCheck, listToCheck):
+    for st in listToCheck:
+        if (st.puzzle == stateToCheck.puzzle).all():
+            return True
+    return False
+
 def nextStep(openList):
     
     nextStates = state.getMoves()
-    print("Next States: ~~~~~~~~~~~~~~~~~~~~~~~")
-    for m in  nextStates:
-        # Open List
-        print(m.puzzle)
-        print("G(N): "+ str(m.g))
-        print("H(N): "+ str(m.h))
-        openList.append(m)
-
+    print("Closed List: ~~~~~~~~~~~~~~~~~~~~~~~")
+    for nState in  nextStates:
+        #print(nState.puzzle)
+        #print("G(N): "+ str(nState.g))
+        #print("H(N): "+ str(nState.h))
+        if not((stateExists(nState, closedList)) and not(stateExists(nState, openList))):
+            openList.append(nState)
         
-    openList = sorted(openList, key=lambda x: x.h, reverse=True)
+    openList = sorted(openList, key=lambda x: x.h, reverse=False)
 
+    for cState in closedList:
+        cState.print()
+
+    print("Open List: ~~~~~~~~~~~~~~~~~~~~~~~")
+
+    for oState in openList:
+        oState.print()
 
 
     return openList[0]
@@ -71,7 +83,7 @@ while(True):
     counter = counter + 1
     print("Iteration: ")
     print(counter)
-    print("Current State: ~~~~~~~~~~~~~~~~~~~~~~~")
+    print("Visited State: ~~~~~~~~~~~~~~~~~~~~~~~")
     state.print()
     closedList.append(state)
     openList.remove(state)
