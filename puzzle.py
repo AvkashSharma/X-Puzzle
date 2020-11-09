@@ -25,25 +25,25 @@ class Puzzle:
         moves = []
         zero = self.getPosition('0')
 
-        # downMove = self.moveDown(zero)
-        # if downMove is not None:
-        #     moves.append(Puzzle(puzzle=self.swapPosition(zero, downMove), g=1))
+        downMove = self.moveDown(zero)
+        if downMove is not None:
+            moves.append(Puzzle(puzzle=self.swapPosition(zero, downMove), g=1))
 
-        # upMove = self.moveUp(zero)
-        # if upMove is not None:
-        #     moves.append(Puzzle(puzzle=self.swapPosition(zero, upMove), g=1))
+        upMove = self.moveUp(zero)
+        if upMove is not None:
+            moves.append(Puzzle(puzzle=self.swapPosition(zero, upMove), g=1))
 
-        # leftMove = self.moveLeft(zero)
-        # if leftMove is not None:
-        #     moves.append(Puzzle(puzzle=self.swapPosition(zero, leftMove), g=1))
+        leftMove = self.moveLeft(zero)
+        if leftMove is not None:
+            moves.append(Puzzle(puzzle=self.swapPosition(zero, leftMove), g=1))
 
-        # rightMove = self.moveRight(zero)
-        # if rightMove is not None:
-        #     moves.append(Puzzle(puzzle=self.swapPosition(zero, rightMove), g=1))
+        rightMove = self.moveRight(zero)
+        if rightMove is not None:
+            moves.append(Puzzle(puzzle=self.swapPosition(zero, rightMove), g=1))
         
-        # wrapMove = self.moveWrapper(zero)
-        # if wrapMove is not None:
-        #     moves.append(Puzzle(puzzle=self.swapPosition(zero, wrapMove), g=2))
+        wrapMove = self.moveWrapper(zero)
+        if wrapMove is not None:
+            moves.append(Puzzle(puzzle=self.swapPosition(zero, wrapMove), g=2))
 
         diagonalMove = self.moveDiagonal(zero)
         if diagonalMove is not None:
