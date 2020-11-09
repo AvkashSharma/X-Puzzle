@@ -1,7 +1,7 @@
 from math import cos
 import numpy as np
 
-class Puzzle:
+class State:
     def __init__(self, input="", puzzle=None, f=0, h=0, g=0):
         self.row = 2
         self.col = 4
@@ -27,28 +27,28 @@ class Puzzle:
 
         downMove = self.moveDown(zero)
         if downMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, downMove), g=1))
+            moves.append(State(puzzle=self.swapPosition(zero, downMove), g=1))
 
         upMove = self.moveUp(zero)
         if upMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, upMove), g=1))
+            moves.append(State(puzzle=self.swapPosition(zero, upMove), g=1))
 
         leftMove = self.moveLeft(zero)
         if leftMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, leftMove), g=1))
+            moves.append(State(puzzle=self.swapPosition(zero, leftMove), g=1))
 
         rightMove = self.moveRight(zero)
         if rightMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, rightMove), g=1))
+            moves.append(State(puzzle=self.swapPosition(zero, rightMove), g=1))
         
         wrapMove = self.moveWrapper(zero)
         if wrapMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, wrapMove), g=2))
+            moves.append(State(puzzle=self.swapPosition(zero, wrapMove), g=2))
 
         diagonalMove = self.moveDiagonal(zero)
         if diagonalMove is not None:
             for diag in diagonalMove:
-                moves.append(Puzzle(puzzle=self.swapPosition(zero, diag), g=3))
+                moves.append(State(puzzle=self.swapPosition(zero, diag), g=3))
 
         # for m in  moves:
         #     print(m.puzzle)
@@ -134,10 +134,15 @@ class Puzzle:
             return True
 
     def h0(self):
-        print('Heuristic 0')
+        pos = self.getPosition('0')
+        if(pos == [self.row-1, self.col-1]).all():
+            return 0
+        else:
+            return 1
 
     def h1(self):
         print('Heuristic 1')
 
     def h2(self):
         print('Heuristic 2')
+
