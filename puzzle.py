@@ -134,7 +134,11 @@ class Puzzle:
             return True
 
     def h0(self):
-        print('Heuristic 0')
+        pos = self.getPosition('0')
+        if(pos == [self.row-1, self.col-1]).all():
+            return 0
+        else:
+            return 1
 
     def h1(self):
         print('Heuristic 1')

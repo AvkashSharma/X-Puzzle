@@ -112,6 +112,7 @@ input = "1 2 3 4 0 5 6 7"
 # input = '1 3 5 7 2 4 6 0'
 
 puzzle = Puzzle(input=input, g=0, f=0)
+# print(puzzle.h0())
 # puzzle.print()
 # puzzle.getMoves()
 
