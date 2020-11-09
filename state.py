@@ -19,7 +19,7 @@ class State:
         
     def print(self):
         print(self.puzzle)
-        print("Cost: "+ str(self.g))
+        # print("Cost: "+ str(self.g))
 
     def getMoves(self):
         moves = []

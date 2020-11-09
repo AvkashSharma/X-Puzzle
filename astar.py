@@ -10,7 +10,10 @@ class Astar:
     openList = []
     closedList = []
 
-    def __init__(self, initial):
+    def __init__(self, initial, puzzleNumber, h_type):
+        self.puzzleNumber = puzzleNumber
+        self.h_type = h_type
+
         # intitalize lists
         np.array(self.openList, dtype=State)
         np.array(self.closedList, dtype=State)
@@ -21,22 +24,31 @@ class Astar:
         self.openList.append(self.initial)
 
         i = 0
-        while len(self.openList) != 0:
+        while len(self.openList) > 0:
             print("Epoch :" + str(i))
+
+            currentNode = self.openList[0]
+            currentI = 0
+
             # sort open list
-            self.openList.sort(key=lambda x:x.f)
+            # self.openList.sort(key=lambda x:x.f)
+            for index, item in enumerate(self.openList):
+                if item.f < currentNode.f:
+                    currentNode = item
+                    currentI = index
             
             # print('openList')
             # print(self.openList)
             # print('closedList')
             # print(self.closedList)
-            for c in self.closedList:
-                c.print()
+            # for c in self.closedList:
+            #     c.print()
 
             # get first item
-            currentNode = self.openList.pop()
+            
             # print('CurrentNode: ')
             # currentNode.print()
+            self.openList.pop(currentI)
             self.closedList.append(currentNode);
 
             # compare with goal
@@ -55,20 +67,19 @@ class Astar:
                     # if exist skip the rest of the loop
                     continue
 
-                
-                # print(str(currentNode.g) +" "+ str(child.g))
                 # g = currentNode.g + distance between child and current
+                # g* cost of lowest cost path from start to node n
                 child.g = currentNode.g + child.g
                 # h = huristic function
                 child.h = child.h0()
                 # f = g+h
                 child.f = child.g + child.h
-                print(child.f)
+                # print(child.f)
 
                 # check if child in openList
                 if any((x.puzzle == child.puzzle).all() for x in self.openList):
                     # check if child.g is higher then openlist g 
-                    print('Child is in openList')
+                    # print('Child is in openList')
                     openNode = getItemFromList(self.openList, child.puzzle)
                     if child.g > openNode.g:
                         continue
@@ -81,34 +92,24 @@ class Astar:
             # break;
             i = i+1
             
-            if i == 10:
-                break;
-        # sort the list
+            # if i == 10:
+            #     break;
 
+    def solution(self):
+        print('solution')
 
-
-        # put initial state in openList
-        # f = 0
-
-        # while loop until openList is not empty
-        # currentNode = n with least f value
-        # remove currentNode from openlist
-        # add currentNode to closedList
-
-        # check currentNode is goal
-
-        # if not then get children node
-        # 
+    def searchPath(self):
+        print('search')
 
 
 
 
 # input = "1 2 3 4 0 5 6 7"
-input = '1 0 3 6 5 2 7 4'
+# input = '1 0 3 6 5 2 7 4'
 
-puzzle = State(input=input, g=0, f=0)
-# print(puzzle.h0())
-# puzzle.print()
-# puzzle.getMoves()
+# puzzle = State(input=input, g=0, f=0)
+# # print(puzzle.h0())
+# # puzzle.print()
+# # puzzle.getMoves()
 
-a = Astar(puzzle)
+# a = Astar(puzzle)
