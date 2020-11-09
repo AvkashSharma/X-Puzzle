@@ -23,6 +23,10 @@ class Astar:
         self.initial = initial
         self.openList.append(self.initial)
 
+        self.start()
+       
+
+    def start(self):
         i = 0
         while len(self.openList) > 0:
             print("Epoch :" + str(i))
@@ -32,6 +36,7 @@ class Astar:
 
             # sort open list
             # self.openList.sort(key=lambda x:x.f)
+            # iterate through 
             for index, item in enumerate(self.openList):
                 if item.f < currentNode.f:
                     currentNode = item
@@ -71,7 +76,9 @@ class Astar:
                 # g* cost of lowest cost path from start to node n
                 child.g = currentNode.g + child.g
                 # h = huristic function
-                child.h = child.h0()
+                if self.h_type =="h0": child.h = child.h0()
+                elif self.h_type =="h1": child.h = child.h1()
+                elif self.h_type =="h2": child.h = child.h2()
                 # f = g+h
                 child.f = child.g + child.h
                 # print(child.f)
@@ -84,18 +91,18 @@ class Astar:
                     if child.g > openNode.g:
                         continue
                 
-                 # add child to openlist
+                    # add child to openlist
                 self.openList.append(child)
 
-               
-            # print(children)
-            # break;
-            i = i+1
-            
-            # if i == 10:
-            #     break;
+                
+                # print(children)
+                # break;
+                i = i+1
+                
+                # if i == 10:
+                #     break;
 
-    def solution(self):
+    def solutionFile(self):
         print('solution')
 
     def searchPath(self):
@@ -104,12 +111,12 @@ class Astar:
 
 
 
-# input = "1 2 3 4 0 5 6 7"
-# input = '1 0 3 6 5 2 7 4'
 
-# puzzle = State(input=input, g=0, f=0)
-# # print(puzzle.h0())
-# # puzzle.print()
-# # puzzle.getMoves()
+input = '1 0 3 6 5 2 7 4'
 
-# a = Astar(puzzle)
+puzzle = State(input=input, g=0, f=0)
+# print(puzzle.h0())
+# puzzle.print()
+# puzzle.getMoves()
+
+a = Astar(initial=puzzle, puzzleNumber=0, h_type="h0")

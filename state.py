@@ -18,11 +18,11 @@ class State:
             self.puzzle = puzzle
 
         if heuristic == "h0":
-            self.h = self.h0(self)
+            self.h = self.h0()
         elif heuristic == "h1":
-            self.h = self.h1(self)
+            self.h = self.h1()
         elif heuristic == "h2":
-            self.h = self.h2(self)
+            self.h = self.h2()
         else:
             self.h = h
         
@@ -140,27 +140,24 @@ class State:
         elif (pos == [self.row - 1, self.col -1]).all():
             return True
 
-    def h0(self, state):
-        pos = state.getPosition('0')
-        if(pos == [state.row-1, state.col-1]).all():
+    def h0(self):
+        pos = self.getPosition('0')
+        if(pos == [self.row-1, self.col-1]).all():
             return 0
         else:
             return 1
-        print('Heuristic 0')
 
-    def h1(self, state):
-        pos = state.getPosition('0')
-        if(pos == [state.row-1, state.col-1]).all():
+    def h1(self):
+        pos = self.getPosition('0')
+        if(pos == [self.row-1, self.col-1]).all():
             return 0
         else:
             return 1
-        print('Heuristic 1')
 
-    def h2(self, state):
-        pos = state.getPosition('0')
-        if(pos == [state.row-1, state.col-1]).all():
+    def h2(self):
+        pos = self.getPosition('0')
+        if(pos == [self.row-1, self.col-1]).all():
             return 0
         else:
             return 1
-        print('Heuristic 2')
 
