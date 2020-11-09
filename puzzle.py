@@ -2,10 +2,9 @@ from math import cos
 import numpy as np
 
 class Puzzle:
-    def __init__(self, input="", cost=0, puzzle=None, f=0, h=0, g=0):
+    def __init__(self, input="", puzzle=None, f=0, h=0, g=0):
         self.row = 2
         self.col = 4
-        self.cost = cost
         self.f = f
         self.h = h
         self.g = g
@@ -20,7 +19,7 @@ class Puzzle:
         
     def print(self):
         print(self.puzzle)
-        print("Cost: "+ str(self.cost))
+        print("Cost: "+ str(self.g))
 
     def getMoves(self):
         moves = []
@@ -28,28 +27,28 @@ class Puzzle:
 
         downMove = self.moveDown(zero)
         if downMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, downMove), cost=1))
+            moves.append(Puzzle(puzzle=self.swapPosition(zero, downMove), g=1))
 
         upMove = self.moveUp(zero)
         if upMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, upMove), cost=1))
+            moves.append(Puzzle(puzzle=self.swapPosition(zero, upMove), g=1))
 
         leftMove = self.moveLeft(zero)
         if leftMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, leftMove), cost=1))
+            moves.append(Puzzle(puzzle=self.swapPosition(zero, leftMove), g=1))
 
         rightMove = self.moveRight(zero)
         if rightMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, rightMove), cost=1))
+            moves.append(Puzzle(puzzle=self.swapPosition(zero, rightMove), g=1))
         
         wrapMove = self.moveWrapper(zero)
         if wrapMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, wrapMove), cost=2))
+            moves.append(Puzzle(puzzle=self.swapPosition(zero, wrapMove), g=2))
 
         diagonalMove = self.moveDiagonal(zero)
         if diagonalMove is not None:
             for diag in diagonalMove:
-                moves.append(Puzzle(puzzle=self.swapPosition(zero, diag), cost=3))
+                moves.append(Puzzle(puzzle=self.swapPosition(zero, diag), g=3))
 
         # for m in  moves:
         #     print(m.puzzle)

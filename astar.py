@@ -41,6 +41,7 @@ class Astar:
 
             children = currentNode.getMoves()
             for child in children:
+                
                 print(child.puzzle)
                 # check if child in closedList
                 # if exist skip use continue
