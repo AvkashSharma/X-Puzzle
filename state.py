@@ -26,7 +26,6 @@ class State:
         else:
             self.h = h
         
-        
     def print(self):
         print(self.puzzle)
         print("G(N): "+ str(self.g))
@@ -60,8 +59,6 @@ class State:
         if diagonalMove is not None:
             for diag in diagonalMove:
                 moves.append(State(puzzle=self.swapPosition(zero, diag), g=3, heuristic=self.heuristic))
-
-        
 
         return moves
 
@@ -163,5 +160,3 @@ class State:
             return 0
         else:
             return 1
-
-
