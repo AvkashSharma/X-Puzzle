@@ -30,10 +30,8 @@ class Astar:
         i = 0
         while len(self.openList) > 0:
             print("Epoch :" + str(i))
-
             currentNode = self.openList[0]
             currentI = 0
-
             # sort open list
             # self.openList.sort(key=lambda x:x.f)
             # iterate through 
@@ -87,11 +85,13 @@ class Astar:
                 if any((x.puzzle == child.puzzle).all() for x in self.openList):
                     # check if child.g is higher then openlist g 
                     # print('Child is in openList')
+                    
                     openNode = getItemFromList(self.openList, child.puzzle)
                     if child.g > openNode.g:
                         continue
                 
                     # add child to openlist
+                child.parent = currentNode
                 self.openList.append(child)
 
                 
@@ -102,17 +102,38 @@ class Astar:
                 # if i == 10:
                 #     break;
 
+    def printClosedList(self):
+        for i in self.closedList:
+            print("\n\n")
+            i.print()
+            if i.parent is not None:
+                print("parent: ")
+                i.parent.print()
+
     def solutionFile(self):
+        f= open("output/{num}_astar-{h}_solution.txt".format(num=self.puzzleNumber, h=self.h_type),"w+")
+        for i in self.closedList:
+            if i.parent is not None:
+                s = str(i.g -i.parent.g)+" "+str(i.puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')
+            else: 
+                s = str(i.g)+" "+str(i.puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')
+            f.write(s+'\n')
         print('solution')
+        f.close()
 
-    def searchPath(self):
+    def searchFile(self):
+        f= open("output/{num}_astar-{h}_search.txt".format(num=self.puzzleNumber, h=self.h_type),"w+")
+        for i in self.closedList:
+            s = str(i.f)+" "+str(i.g)+" "+str(i.h)+" "+str(i.puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')
+            f.write(s+'\n')
         print('search')
+        f.close()
 
 
 
 
 
-input = '1 0 3 6 5 2 7 4'
+input = '1 2 0 3 5 6 7 4'
 
 puzzle = State(input=input, g=0, f=0)
 # print(puzzle.h0())
@@ -120,3 +141,13 @@ puzzle = State(input=input, g=0, f=0)
 # puzzle.getMoves()
 
 a = Astar(initial=puzzle, puzzleNumber=0, h_type="h0")
+a.printClosedList()
+a.searchFile()
+a.solutionFile()
+
+# a = '1 2 0 3 5 6 7 4'
+# p = State(input=a, g=0, f=0)
+# p.print()
+# m = p.getMoves()
+# for mi in m:
+#     mi.print()
