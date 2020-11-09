@@ -2,11 +2,12 @@ from math import cos
 import numpy as np
 
 class State:
-    def __init__(self, input="", puzzle=None, f=0, g=0, h=0, heuristic=""):
+    def __init__(self, input="", puzzle=None, f=0, g=0, totalG=0, h=0, heuristic=""):
         self.row = 2
         self.col = 4
         self.f = f
         self.g = g
+        self.totalG = totalG
         self.heuristic = heuristic
 
         if input!="":
@@ -28,6 +29,7 @@ class State:
         
     def print(self):
         print(self.puzzle)
+        print("Cumalative G(N)" + str(self.totalG))
         print("G(N): "+ str(self.g))
         print("H(N): "+ str(self.h))
 
@@ -37,28 +39,28 @@ class State:
 
         downMove = self.moveDown(zero)
         if downMove is not None:
-            moves.append(State(puzzle=self.swapPosition(zero, downMove), g=1, heuristic=self.heuristic))
+            moves.append(State(puzzle=self.swapPosition(zero, downMove), g=1, totalG = self.totalG + 1, heuristic=self.heuristic))
 
         upMove = self.moveUp(zero)
         if upMove is not None:
-            moves.append(State(puzzle=self.swapPosition(zero, upMove), g=1, heuristic=self.heuristic))
+            moves.append(State(puzzle=self.swapPosition(zero, upMove), g=1, totalG = self.totalG + 1, heuristic=self.heuristic))
 
         leftMove = self.moveLeft(zero)
         if leftMove is not None:
-            moves.append(State(puzzle=self.swapPosition(zero, leftMove), g=1, heuristic=self.heuristic))
+            moves.append(State(puzzle=self.swapPosition(zero, leftMove), g=1, totalG = self.totalG + 1, heuristic=self.heuristic))
 
         rightMove = self.moveRight(zero)
         if rightMove is not None:
-            moves.append(State(puzzle=self.swapPosition(zero, rightMove), g=1, heuristic=self.heuristic))
+            moves.append(State(puzzle=self.swapPosition(zero, rightMove), g=1, totalG = self.totalG + 1, heuristic=self.heuristic))
         
         wrapMove = self.moveWrapper(zero)
         if wrapMove is not None:
-            moves.append(State(puzzle=self.swapPosition(zero, wrapMove), g=2, heuristic=self.heuristic))
+            moves.append(State(puzzle=self.swapPosition(zero, wrapMove), g=2, totalG = self.totalG + 2, heuristic=self.heuristic))
 
         diagonalMove = self.moveDiagonal(zero)
         if diagonalMove is not None:
             for diag in diagonalMove:
-                moves.append(State(puzzle=self.swapPosition(zero, diag), g=3, heuristic=self.heuristic))
+                moves.append(State(puzzle=self.swapPosition(zero, diag), g=3, totalG = self.totalG + 3, heuristic=self.heuristic))
 
         return moves
 
