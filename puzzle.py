@@ -9,7 +9,7 @@ class Puzzle:
         self.h = h
         self.g = g
 
-        if input!='':
+        if input!="":
             inputList = input.split(" ")
             npMatrix = np.split(np.array(inputList), self.row)
             self.puzzle = np.vstack(npMatrix)
@@ -25,25 +25,25 @@ class Puzzle:
         moves = []
         zero = self.getPosition('0')
 
-        downMove = self.moveDown(zero)
-        if downMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, downMove), g=1))
+        # downMove = self.moveDown(zero)
+        # if downMove is not None:
+        #     moves.append(Puzzle(puzzle=self.swapPosition(zero, downMove), g=1))
 
-        upMove = self.moveUp(zero)
-        if upMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, upMove), g=1))
+        # upMove = self.moveUp(zero)
+        # if upMove is not None:
+        #     moves.append(Puzzle(puzzle=self.swapPosition(zero, upMove), g=1))
 
-        leftMove = self.moveLeft(zero)
-        if leftMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, leftMove), g=1))
+        # leftMove = self.moveLeft(zero)
+        # if leftMove is not None:
+        #     moves.append(Puzzle(puzzle=self.swapPosition(zero, leftMove), g=1))
 
-        rightMove = self.moveRight(zero)
-        if rightMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, rightMove), g=1))
+        # rightMove = self.moveRight(zero)
+        # if rightMove is not None:
+        #     moves.append(Puzzle(puzzle=self.swapPosition(zero, rightMove), g=1))
         
-        wrapMove = self.moveWrapper(zero)
-        if wrapMove is not None:
-            moves.append(Puzzle(puzzle=self.swapPosition(zero, wrapMove), g=2))
+        # wrapMove = self.moveWrapper(zero)
+        # if wrapMove is not None:
+        #     moves.append(Puzzle(puzzle=self.swapPosition(zero, wrapMove), g=2))
 
         diagonalMove = self.moveDiagonal(zero)
         if diagonalMove is not None:
@@ -102,19 +102,21 @@ class Puzzle:
             # r2, c2 - opposite corner
             r1= c1= r2= c2 = 0
 
+            # rows
             if pos[0] == 0:
                 r1 = 1
                 r2 = self.row -1
             elif pos[0] == self.row-1:
-                r1 = self.col-2
+                r1 = self.row-2
 
+            # cols
             if pos[1] == 0:
                 c1 = 1
                 c2 =self.col -1
-            elif pos[1] == self.row-1:
+            elif pos[1] == self.col-1:
                 c1 = self.col-2
-
-            return np.array([[c1, r1], [c2, r2]])
+            
+            return np.array([[r1, c1], [r2, c2]])
         return None
 
 
