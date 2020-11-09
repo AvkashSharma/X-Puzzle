@@ -36,12 +36,12 @@ class GBFS:
                 return True
         return False
 
-    def nextStep(self):
+    def getNextState(self):
         
         nextStates = self.state.getMoves()
         
         for nState in  nextStates:
-            if not((self.stateExists(nState, self.closedList)) and not(self.stateExists(nState, self.openList))):
+            if (not(self.stateExists(nState, self.closedList)) and not(self.stateExists(nState, self.openList))):
                 self.openList.append(nState)
             
         self.openList = sorted(self.openList, key=lambda x: x.h, reverse=False)
@@ -51,7 +51,6 @@ class GBFS:
             cState.print()
 
         print("Open List: ~~~~~~~~~~~~~~~~~~~~~~~")
-
         for oState in self.openList:
             oState.print()
 
@@ -67,7 +66,7 @@ class GBFS:
             self.openList.remove(self.state)
             if(self.IsGoalState()):
                 break
-            self.state = self.nextStep()
+            self.state = self.getNextState()
             # putting a temporary break to prevent long results for now
             if(self.steps == 10):
                 break
