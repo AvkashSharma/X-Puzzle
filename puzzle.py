@@ -141,3 +141,4 @@ class Puzzle:
 
     def h2(self):
         print('Heuristic 2')
+
