@@ -81,6 +81,6 @@ goalstate1 = "1 2 3 4 5 6 7 0"
 
 goalstate2 = "1 3 5 7 2 4 6 0"
 
-gbfs = GBFS(input = input, heuristic="h1", goalState1=goalstate1, goalState2=goalstate2)
+gbfs = GBFS(input = input, heuristic="h2", goalState1=goalstate1, goalState2=goalstate2)
 
 gbfs.startGBFS()

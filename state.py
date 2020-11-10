@@ -164,14 +164,27 @@ class State:
         counter = 0
         singleArrayPuzzle = self.puzzle.flatten()
         singleArrayGoalPuzzle1 = self.goalState1.puzzle.flatten()
-        for i in singleArrayPuzzle:
-            counter = self.findMissPlaceTiles(i, singleArrayPuzzle, singleArrayGoalPuzzle1)
-            
+        for i in range(self.row*self.col):
+            if(singleArrayPuzzle[i] != '0'):
+                counter = counter + self.findMissPlacedTiles(i, self.row * self.col,singleArrayPuzzle, singleArrayGoalPuzzle1)
+
         return counter
 
-    def findMissPlaceTiles(self, index, puzzle, goalPuzzle):
+    def findMissPlacedTiles(self, startIndex, endIndex, currentPuzzel, goalPuzzle):
         counter = 0
-        for index in range(self.row * self.col - 1):
-            if (puzzle[index] != goalPuzzle.puzzle[index] and puzzle[index] != 0):
-                counter = counter + 1
+        arrayOfGoalPuzzleBeforeIndex = self.getArrayOfGoalPuzzleBeforeIndex(currentPuzzel[startIndex], goalPuzzle)
+        arrayOfPuzzleAfterIndex = currentPuzzel[(startIndex+1):endIndex]
+        for g in arrayOfGoalPuzzleBeforeIndex:
+            for p in arrayOfPuzzleAfterIndex:
+                if((g == p) and g != '0'):
+                    counter = counter + 1
+
         return counter
+    
+    def getArrayOfGoalPuzzleBeforeIndex(self, valueAtIndex, goalPuzzle):
+        arrayOfGoalPuzzleBeforeIndex = []
+        for i in range(self.col * self.row):
+            if(goalPuzzle[i] == valueAtIndex):
+                arrayOfGoalPuzzleBeforeIndex = goalPuzzle[0:i]
+                break
+        return arrayOfGoalPuzzleBeforeIndex
