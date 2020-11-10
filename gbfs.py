@@ -40,13 +40,6 @@ class GBFS:
                 return True
         return False
 
-    def replaceHigherGWithLowerGIfExists(self, stateToCheck):
-        for st in self.openList:
-            if ((st.puzzle == stateToCheck.puzzle).all() and (st.totalG > stateToCheck.totalG)):
-                st.totalG = stateToCheck.totalG
-                return True
-        return False
-
     def getNextState(self):
         
         nextStates = self.state.getMoves()
@@ -54,8 +47,6 @@ class GBFS:
         for nState in  nextStates:
             if (not(self.stateExists(nState, self.closedList)) and not(self.stateExists(nState, self.openList))):
                 self.openList.append(nState)
-            elif not(self.stateExists(nState, self.closedList) and (self.stateExists(nState, self.openList))):
-                self.replaceHigherGWithLowerGIfExists(nState)
             
         self.openList = sorted(self.openList, key=lambda x: x.h, reverse=False)
 
