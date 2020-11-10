@@ -2,12 +2,15 @@ from math import cos
 import numpy as np
 
 class State:
-    def __init__(self, input="", puzzle=None, f=0, g=0, h=0, heuristic=""):
+    def __init__(self, input="", parent=None, puzzle=None, f=0, g=0, totalG=0, h=0, heuristic="", goalState1=None, goalState2=None):
         self.row = 2
         self.col = 4
         self.f = f
         self.g = g
+        self.totalG = totalG
         self.heuristic = heuristic
+        self.goalState1 = goalState1
+        self.goalState2 = goalState2
 
         if input!="":
             inputList = input.split(" ")
@@ -25,9 +28,13 @@ class State:
             self.h = self.h2()
         else:
             self.h = h
+
+        if parent is not None:
+            self.parent = parent
         
     def print(self):
         print(self.puzzle)
+        print("Cumalative G(N): " + str(self.totalG))
         print("G(N): "+ str(self.g))
         print("H(N): "+ str(self.h))
 
@@ -37,28 +44,28 @@ class State:
 
         downMove = self.moveDown(zero)
         if downMove is not None:
-            moves.append(State(puzzle=self.swapPosition(zero, downMove), g=1, heuristic=self.heuristic))
+            moves.append(State(parent=self, puzzle=self.swapPosition(zero, downMove), g=1, totalG = self.totalG + 1, heuristic=self.heuristic, goalState1=self.goalState1, goalState2=self.goalState2))
 
         upMove = self.moveUp(zero)
         if upMove is not None:
-            moves.append(State(puzzle=self.swapPosition(zero, upMove), g=1, heuristic=self.heuristic))
+            moves.append(State(parent=self, puzzle=self.swapPosition(zero, upMove), g=1, totalG = self.totalG + 1, heuristic=self.heuristic, goalState1=self.goalState1, goalState2=self.goalState2))
 
         leftMove = self.moveLeft(zero)
         if leftMove is not None:
-            moves.append(State(puzzle=self.swapPosition(zero, leftMove), g=1, heuristic=self.heuristic))
+            moves.append(State(parent=self, puzzle=self.swapPosition(zero, leftMove), g=1, totalG = self.totalG + 1, heuristic=self.heuristic, goalState1=self.goalState1, goalState2=self.goalState2))
 
         rightMove = self.moveRight(zero)
         if rightMove is not None:
-            moves.append(State(puzzle=self.swapPosition(zero, rightMove), g=1, heuristic=self.heuristic))
+            moves.append(State(parent=self, puzzle=self.swapPosition(zero, rightMove), g=1, totalG = self.totalG + 1, heuristic=self.heuristic, goalState1=self.goalState1, goalState2=self.goalState2))
         
         wrapMove = self.moveWrapper(zero)
         if wrapMove is not None:
-            moves.append(State(puzzle=self.swapPosition(zero, wrapMove), g=2, heuristic=self.heuristic))
+            moves.append(State(parent=self, puzzle=self.swapPosition(zero, wrapMove), g=2, totalG = self.totalG + 2, heuristic=self.heuristic, goalState1=self.goalState1, goalState2=self.goalState2))
 
         diagonalMove = self.moveDiagonal(zero)
         if diagonalMove is not None:
             for diag in diagonalMove:
-                moves.append(State(puzzle=self.swapPosition(zero, diag), g=3, heuristic=self.heuristic))
+                moves.append(State(parent=self, puzzle=self.swapPosition(zero, diag), g=3, totalG = self.totalG + 3, heuristic=self.heuristic, goalState1=self.goalState1, goalState2=self.goalState2))
 
         return moves
 
@@ -148,15 +155,58 @@ class State:
             return 1
 
     def h1(self):
-        pos = self.getPosition('0')
-        if(pos == [self.row-1, self.col-1]).all():
-            return 0
+        counter = 0
+        counter1 = 0
+        counter2 = 0
+        for i in range(self.row):
+            for j in range(self.col):
+                if (self.puzzle[i, j] != self.goalState1.puzzle[i, j] and self.puzzle[i, j] != 0):
+                    counter1 = counter1 + 1
+                if (self.puzzle[i, j] != self.goalState2.puzzle[i, j] and self.puzzle[i, j] != 0):
+                    counter2 = counter2 + 1
+
+        if (counter1 < counter2):
+            counter = counter1
         else:
-            return 1
+            counter = counter2
+
+        return counter
 
     def h2(self):
-        pos = self.getPosition('0')
-        if(pos == [self.row-1, self.col-1]).all():
-            return 0
+        counter = 0
+        counter1 = 0
+        counter2 = 0
+        singleArrayPuzzle = self.puzzle.flatten()
+        singleArrayGoalPuzzle1 = self.goalState1.puzzle.flatten()
+        singleArrayGoalPuzzle2 = self.goalState2.puzzle.flatten()
+
+        for i in range(self.row*self.col):
+            if(singleArrayPuzzle[i] != '0'):
+                counter1 = counter1 + self.findMissPlacedTiles(i, self.row * self.col,singleArrayPuzzle, singleArrayGoalPuzzle1)
+                counter2 = counter2 + self.findMissPlacedTiles(i, self.row * self.col,singleArrayPuzzle, singleArrayGoalPuzzle2)
+
+        if (counter1 < counter2):
+            counter = counter1
         else:
-            return 1
+            counter = counter2
+
+        return counter
+
+    def findMissPlacedTiles(self, startIndex, endIndex, currentPuzzel, goalPuzzle):
+        counter = 0
+        arrayOfGoalPuzzleBeforeIndex = self.getArrayOfGoalPuzzleBeforeIndex(currentPuzzel[startIndex], goalPuzzle)
+        arrayOfPuzzleAfterIndex = currentPuzzel[(startIndex+1):endIndex]
+        for g in arrayOfGoalPuzzleBeforeIndex:
+            for p in arrayOfPuzzleAfterIndex:
+                if((g == p) and g != '0'):
+                    counter = counter + 1
+
+        return counter
+    
+    def getArrayOfGoalPuzzleBeforeIndex(self, valueAtIndex, goalPuzzle):
+        arrayOfGoalPuzzleBeforeIndex = []
+        for i in range(self.col * self.row):
+            if(goalPuzzle[i] == valueAtIndex):
+                arrayOfGoalPuzzleBeforeIndex = goalPuzzle[0:i]
+                break
+        return arrayOfGoalPuzzleBeforeIndex
