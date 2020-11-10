@@ -84,19 +84,10 @@ class GBFS:
             # putting a temporary break to prevent long results for now
             if(self.steps == 100):
                 break
-    
-    def printClosedList(self):
-        for i in self.closedList:
-            print("\n\n")
-            i.print()
-            if i.parent is not None:
-                print("parent: ")
-                i.parent.print()
 
     def solutionFile(self):
         f= open("output/{num}_gbfs-{h}_solution.txt".format(num=self.num, h=self.heuristic),"w+")
-        #s = "0 0 " + input
-        #f.write(s + '\n')
+
         if (self.foundState is not None):
             solutionPath = []
             solutionPathState = self.foundState
@@ -112,8 +103,11 @@ class GBFS:
                 f.write(s+'\n')
             s = str(self.foundState.totalG) + " " + str("time here goes")
             f.write(s+'\n')
+            print('Solution')
+        else:
+            f.write("No Solution")
+            print("No Solution")
         
-        print('solution')
         f.close()
 
     def searchFile(self):
@@ -123,7 +117,7 @@ class GBFS:
             s = "0 0 " + str(i.h) + " "+ str(i.puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')
             f.write(s+'\n')
 
-        print('search')
+        print('Search')
         f.close()
 
 
