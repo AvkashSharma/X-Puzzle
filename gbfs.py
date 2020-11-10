@@ -59,7 +59,7 @@ class GBFS:
     def startGBFS(self):
         while(True):
             self.steps = self.steps + 1
-            print("Iteration: " + str(self.steps))
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nIteration: " + str(self.steps))
             print("Visited State: ~~~~~~~~~~~~~~~~~~~~~~~")
             self.state.print()
             self.closedList.append(self.state)

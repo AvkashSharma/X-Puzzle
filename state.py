@@ -31,7 +31,7 @@ class State:
         
     def print(self):
         print(self.puzzle)
-        print("Cumalative G(N)" + str(self.totalG))
+        print("Cumalative G(N): " + str(self.totalG))
         print("G(N): "+ str(self.g))
         print("H(N): "+ str(self.h))
 
@@ -153,20 +153,39 @@ class State:
 
     def h1(self):
         counter = 0
+        counter1 = 0
+        counter2 = 0
         for i in range(self.row):
             for j in range(self.col):
                 if (self.puzzle[i, j] != self.goalState1.puzzle[i, j] and self.puzzle[i, j] != 0):
-                    counter = counter + 1
+                    counter1 = counter1 + 1
+                if (self.puzzle[i, j] != self.goalState2.puzzle[i, j] and self.puzzle[i, j] != 0):
+                    counter2 = counter2 + 1
+
+        if (counter1 < counter2):
+            counter = counter1
+        else:
+            counter = counter2
 
         return counter
 
     def h2(self):
         counter = 0
+        counter1 = 0
+        counter2 = 0
         singleArrayPuzzle = self.puzzle.flatten()
         singleArrayGoalPuzzle1 = self.goalState1.puzzle.flatten()
+        singleArrayGoalPuzzle2 = self.goalState2.puzzle.flatten()
+
         for i in range(self.row*self.col):
             if(singleArrayPuzzle[i] != '0'):
-                counter = counter + self.findMissPlacedTiles(i, self.row * self.col,singleArrayPuzzle, singleArrayGoalPuzzle1)
+                counter1 = counter1 + self.findMissPlacedTiles(i, self.row * self.col,singleArrayPuzzle, singleArrayGoalPuzzle1)
+                counter2 = counter2 + self.findMissPlacedTiles(i, self.row * self.col,singleArrayPuzzle, singleArrayGoalPuzzle2)
+
+        if (counter1 < counter2):
+            counter = counter1
+        else:
+            counter = counter2
 
         return counter
 
