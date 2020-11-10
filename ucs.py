@@ -28,8 +28,8 @@ class UniformCostSearch:
     self.open_list = sorted(self.open_list, key=lambda x: x.g, reverse=False)
 
     print("Open List: ~~~~~~~~~~~~~~~~~~~~~~~")
-    for oState in self.open_list:
-      oState.print()
+    for o_list in self.open_list:
+      o_list.print()
     return self.open_list.pop(0)
   
 
@@ -63,6 +63,9 @@ class UniformCostSearch:
       current_state.print()
       
       self.closed_list.append(current_state)
+      print("Closed State: ~~~~~~~~~~~~~~~~~~~~~~~")
+      for cl_item in self.closed_list:
+        cl_item.print()
 
       # check if current_state is goal_state
       if self.isGoalState(current_state):
