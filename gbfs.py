@@ -8,15 +8,15 @@ class GBFS:
         self.openList = openList
         self.closedList = closedList
 
-        if input!="" and heuristic !="":
-            self.state = State(input=input, heuristic=heuristic)
-        
         if goalState1 is not None:
             self.goalState1 = State(input=goalState1)
 
         if goalState2 is not None:
             self.goalState2 = State(input=goalState2)
 
+        if input!="" and heuristic !="":
+            self.state = State(input=input, heuristic=heuristic, goalState1=self.goalState1, goalState2=self.goalState2)
+        
         self.openList.append(self.state)
 
     def IsGoalState(self):
@@ -81,15 +81,6 @@ goalstate1 = "1 2 3 4 5 6 7 0"
 
 goalstate2 = "1 3 5 7 2 4 6 0"
 
-gbfs = GBFS(input = input, heuristic="h2", goalState1=goalstate1, goalState2=goalstate2)
+gbfs = GBFS(input = input, heuristic="h1", goalState1=goalstate1, goalState2=goalstate2)
 
 gbfs.startGBFS()
-
-    
-
-
-
-
-
-
-
