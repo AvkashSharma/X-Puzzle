@@ -71,7 +71,7 @@ class State:
 
 # get position
     def getPosition(self, pos):
-            return np.argwhere(self.puzzle == pos)[0]
+        return np.argwhere(self.puzzle == pos)[0]
 
 # there is probabily a better way
     def swapPosition(self, posA, posB):
