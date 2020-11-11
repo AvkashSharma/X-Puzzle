@@ -4,7 +4,8 @@ from state import State
 
 class UniformCostSearch:
 
-  def __init__(self, initial, goal_state1, goal_state2):
+  def __init__(self, initial, goal_state1, goal_state2, puzzleNumber):
+    self.puzzleNumber = puzzleNumber
     self.input_state = State(initial, g = 0)
     self.open_list = []
     self.closed_list = []
@@ -25,11 +26,7 @@ class UniformCostSearch:
     return False
 
   def getLowestCostState(self):
-    self.open_list = sorted(self.open_list, key=lambda x: x.g, reverse=False)
-
-    print("Open List: ~~~~~~~~~~~~~~~~~~~~~~~")
-    for o_list in self.open_list:
-      o_list.print()
+    self.open_list = sorted(self.open_list, key=lambda x: x.totalG, reverse=False)
     return self.open_list.pop(0)
   
 
@@ -41,10 +38,9 @@ class UniformCostSearch:
 
 
   def updateIfLowerCost(self,stateToCheck):
-    print('lower ')
-    for st in self.open_list:
-      if ((st.puzzle == stateToCheck.puzzle).all() and (st.g > stateToCheck.g).all()):
-        self.open_list.g = stateToCheck.g
+    for state in self.open_list:
+      if ((state.puzzle == stateToCheck.puzzle).all() and (state.totalG > stateToCheck.totalG)):
+        state.totalG = stateToCheck.totalG
 
   
   def solve(self):
@@ -59,13 +55,10 @@ class UniformCostSearch:
       
       # choose the lowest cost state from the open list
       current_state = self.getLowestCostState()
-      print("Visited State: ~~~~~~~~~~~~~~~~~~~~~~~")
-      current_state.print()
+      # current_state.print()
       
       self.closed_list.append(current_state)
-      print("Closed State: ~~~~~~~~~~~~~~~~~~~~~~~")
-      for cl_item in self.closed_list:
-        cl_item.print()
+    
 
       # check if current_state is goal_state
       if self.isGoalState(current_state):
@@ -75,29 +68,28 @@ class UniformCostSearch:
       # print("curr " + str(current_state.g))
 
       for state in next_states:
-        #print("before")
-        #print(state.g)
-        state.g = current_state.g + state.g
-        #print("after")
-        #print(state.g)
-
-        if not((self.stateExists(state, self.closed_list)) and not(self.stateExists(state, self.open_list))):
+        if not(self.stateExists(state, self.closed_list)) and not(self.stateExists(state, self.open_list)):
           self.open_list.append(state)
-        elif not(self.stateExists(state, self.closed_list)) and self.stateExists(state, self.open_list):
+        elif not (self.stateExists(state, self.closed_list)) and (self.stateExists(state, self.open_list)):
           self.updateIfLowerCost(state)
 
       
-      if(self.step_count == 10):
+      if(self.step_count == 100):
         break 
     
 
+  
+  def solution_file(self):
+    f = open("output/{num}_ucs_solution.txt".format(num=self.puzzleNumber), "w+")
+    print("solution")
+    f.close()
 
-    
+  def search_file(self):
+    f = open("output/{num}_ucs_search.txt".format(num=self.puzzleNumber), "w+")
+    print("search")
+    f.close()
 
 
-
-
-      
 
 
 
@@ -107,4 +99,4 @@ input = "4 2 3 1 5 6 7 0"
 goalstate1 = "1 2 3 4 5 6 7 0"
 goalstate2 = "1 3 5 7 2 4 6 0"
 
-ucs = UniformCostSearch(input,goalstate1,goalstate2)
+ucs = UniformCostSearch(input,goalstate1,goalstate2,puzzleNumber = 0)
