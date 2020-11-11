@@ -2,6 +2,7 @@ from math import cos
 import numpy as np
 from state import State
 import time as time
+import os
 
 class GBFS:
     def __init__(self, num = 0, initialState=None, input="", heuristic="", steps=0, openList = [], closedList = [], goalState1 = None, goalState2 = None, state=None, foundState=None):
@@ -51,22 +52,22 @@ class GBFS:
             
         self.openList = sorted(self.openList, key=lambda x: x.h, reverse=False)
 
-        print("Closed List: ~~~~~~~~~~~~~~~~~~~~~~~")
-        for cState in self.closedList:
-            cState.print()
+        #print("Closed List: ~~~~~~~~~~~~~~~~~~~~~~~")
+        #for cState in self.closedList:
+            #cState.print()
 
-        print("Open List: ~~~~~~~~~~~~~~~~~~~~~~~")
-        for oState in self.openList:
-            oState.print()
+        #print("Open List: ~~~~~~~~~~~~~~~~~~~~~~~")
+        #for oState in self.openList:
+            #oState.print()
 
         return self.openList[0]
 
     def startGBFS(self):
         while(True):
             self.steps = self.steps + 1
-            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nIteration: " + str(self.steps))
-            print("Visited State: ~~~~~~~~~~~~~~~~~~~~~~~")
-            self.state.print()
+            #print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nIteration: " + str(self.steps))
+            #print("Visited State: ~~~~~~~~~~~~~~~~~~~~~~~")
+            #self.state.print()
             self.closedList.append(self.state)
             self.openList.remove(self.state)
             if(self.IsGoalState()):
@@ -77,15 +78,15 @@ class GBFS:
             if(self.steps == 100):
                 break
 
-    def solutionFile(self):
+    def solutionFile(self, timeDuration):
         f= open("output/{num}_gbfs-{h}_solution.txt".format(num=self.num, h=self.heuristic),"w+")
-
+        totalLengthOfSolution = 0
         if (self.foundState is not None):
             solutionPath = []
             currentStateOfSolutionPath = self.foundState
             solutionPath.append(currentStateOfSolutionPath)
             
-            while ((currentStateOfSolutionPath.puzzle) != (self.initialState.puzzle)).any():
+            while (((currentStateOfSolutionPath.puzzle) != (self.initialState.puzzle)).any() and currentStateOfSolutionPath.parent is not None):
                 currentStateOfSolutionPath = currentStateOfSolutionPath.parent
                 solutionPath.append(currentStateOfSolutionPath)
                 
@@ -93,40 +94,27 @@ class GBFS:
             for i in range(0,len(solutionPath)):
                 s = str(i) + " " + str(solutionPath[i].g) + " " + str(solutionPath[i].puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')
                 f.write(s+'\n')
-            s = str(self.foundState.totalG) + " " + str(end - start)
+            s = str(self.foundState.totalG) + " " + str(timeDuration)
             f.write(s+'\n')
             print('Found Solution')
+            totalLengthOfSolution = len(solutionPath)
         else:
             f.write("No Solution")
             print("No Solution")
         
         f.close()
 
+        return totalLengthOfSolution
+
     def searchFile(self):
+        totalLengthOfSearch = 0
         f= open("output/{num}_gbfs-{h}_search.txt".format(num=self.num, h=self.heuristic),"w+")
-        
+        totalLengthOfSearch = len(self.closedList)
         for i in self.closedList:
             s = "0 0 " + str(i.h) + " "+ str(i.puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')
             f.write(s+'\n')
-
         print('Found Search')
         f.close()
 
+        return totalLengthOfSearch
 
-# Visited State
-input = "4 2 3 1 5 6 7 0"
-input2 = "1 2 3 4 5 6 7 0"
-input3 = "1 2 3 4 5 6 0 7"
-
-goalstate1 = "1 2 3 4 5 6 7 0"
-
-goalstate2 = "1 3 5 7 2 4 6 0"
-
-start = time.time()
-gbfs = GBFS(num = 0, input = input, heuristic="h2", goalState1=goalstate1, goalState2=goalstate2)
-
-gbfs.startGBFS()
-end = time.time()
-gbfs.solutionFile()
-
-gbfs.searchFile()
