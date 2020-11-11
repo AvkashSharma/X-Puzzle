@@ -12,7 +12,7 @@ class State:
         self.row = 2
         self.col = 4
         self.parent = parent
-        self.cost = cost
+        # self.cost = cost
         self.f = f
         self.g = g
         self.totalG = totalG
