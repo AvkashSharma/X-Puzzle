@@ -58,6 +58,9 @@ class UniformCostSearch:
       # current_state.print()
       
       self.closed_list.append(current_state)
+      print("Closed List: ~~~~~~~~~~~~~~~~~~~~~~~")
+      for cState in self.closed_list:
+        cState.print()
     
 
       # check if current_state is goal_state
@@ -86,7 +89,10 @@ class UniformCostSearch:
 
   def search_file(self):
     f = open("output/{num}_ucs_search.txt".format(num=self.puzzleNumber), "w+")
-    print("search")
+    for i in self.closed_list:
+      s = str(0)+ " "+ str(i.g)+ " "+ str(0)+ " " +str(i.puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')
+      f.write(s+'\n')
+    print('Search')
     f.close()
 
 
@@ -100,3 +106,4 @@ goalstate1 = "1 2 3 4 5 6 7 0"
 goalstate2 = "1 3 5 7 2 4 6 0"
 
 ucs = UniformCostSearch(input,goalstate1,goalstate2,puzzleNumber = 0)
+ucs.search_file()
