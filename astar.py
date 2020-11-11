@@ -1,18 +1,19 @@
 import numpy as np
+from numpy.lib import utils
+from numpy.lib.type_check import common_type
+import common 
 from state import State
 
-def getItemFromList(arr, puzzle):
-    for a in arr:
-        if (a.puzzle == puzzle).all():
-            return a
+
 
 class Astar:
-    openList = []
-    closedList = []
+    openList = [] #openList, States to visit
+    closedList = [] #closedList, States we already visited
+    step = 0 #number of states visited
 
-    def __init__(self, initial, puzzleNumber, h_type):
-        self.puzzleNumber = puzzleNumber
-        self.h_type = h_type
+    def __init__(self, initialState, puzzleNumber, h_type):
+        self.puzzleNumber = puzzleNumber #puzzle number used for outputing solution
+        self.h_type = h_type #used to determine the type heuristic function to use
 
         # intitalize lists
         np.array(self.openList, dtype=State)
@@ -20,86 +21,64 @@ class Astar:
         self.goal1 = State(input='1 2 3 4 5 6 7 0', g=0, f=0)
         self.goal2 = State(input='1 3 5 7 2 4 6 0', g=0, f=0)
         
-        self.initial = initial
+        self.initial = initialState
         self.openList.append(self.initial)
 
         self.start()
-       
-
+    
     def start(self):
-        i = 0
         while len(self.openList) > 0:
-            print("Epoch :" + str(i))
-            currentNode = self.openList[0]
-            currentI = 0
-            # sort open list
-            # self.openList.sort(key=lambda x:x.f)
-            # iterate through 
-            for index, item in enumerate(self.openList):
-                if item.f < currentNode.f:
-                    currentNode = item
-                    currentI = index
-            
-            # print('openList')
-            # print(self.openList)
-            # print('closedList')
-            # print(self.closedList)
-            # for c in self.closedList:
-            #     c.print()
+            print("Steps:" + str(self.step)) #print iteration number
+             
+            self.openList = sorted(self.openList, key=lambda x:x.f, reverse=False)  # sort openList sort by f'
+            print("Closed List: ~~~~~~~~~~~~~~~~~~~~~~~")
+            for cState in self.closedList:
+                cState.print()
 
-            # get first item
+            print("Open List: ~~~~~~~~~~~~~~~~~~~~~~~")
+            for oState in self.openList:
+                oState.print()
             
-            # print('CurrentNode: ')
-            # currentNode.print()
-            self.openList.pop(currentI)
-            self.closedList.append(currentNode);
+            currentState = self.openList[0]     # get state with smallest f from openlist
+            self.openList.remove(currentState)  # remove currentState from openList
+            self.closedList.append(currentState);# add currentState to closedList
 
-            # compare with goal
-            if (currentNode.puzzle == self.goal1.puzzle).all():
+            # compare with goals
+            if (currentState.puzzle == self.goal1.puzzle).all():
                 print('goal1 found');
                 break;
 
-            if (currentNode.puzzle == self.goal2.puzzle).all():
+            elif (currentState.puzzle == self.goal2.puzzle).all():
                 print('goal2 found');
                 break;
 
-            children = currentNode.getMoves()
+            children = currentState.getMoves() #get all possible states for currentState
+            # check if states are in open or closed list
             for child in children:
-                # check if child in closedList
-                if any((x.puzzle == child.puzzle).all() for x in self.closedList):
-                    # if exist skip the rest of the loop
-                    continue
+                if common.stateExists(child, self.closedList): # check if child in closedList
+                    continue     # if exist skip the rest of the loop
 
                 # g = currentNode.g + distance between child and current
                 # g* cost of lowest cost path from start to node n
-                child.g = currentNode.g + child.g
-                # h = huristic function
+                child.g = currentState.g + child.g #compute g
+
+                if common.stateExists(child, self.openList): # check if child in openList
+                    existingState = common.getStateFromList(self.openList, child) 
+                    if child.g > existingState.g: #compare existing state g with child g
+                        continue # if child g is bigger then skip loop
+
                 if self.h_type =="h0": child.h = child.h0()
                 elif self.h_type =="h1": child.h = child.h1()
-                elif self.h_type =="h2": child.h = child.h2()
-                # f = g+h
-                child.f = child.g + child.h
-                # print(child.f)
+                elif self.h_type =="h2": child.h = child.h2() #compute h
+                child.f = child.g + child.h #compute f
 
-                # check if child in openList
-                if any((x.puzzle == child.puzzle).all() for x in self.openList):
-                    # check if child.g is higher then openlist g 
-                    # print('Child is in openList')
-                    
-                    openNode = getItemFromList(self.openList, child.puzzle)
-                    if child.g > openNode.g:
-                        continue
-                
-                    # add child to openlist
-                child.parent = currentNode
-                self.openList.append(child)
 
-                
-                # print(children)
-                # break;
-                i = i+1
-                
-                # if i == 10:
+                child.parent = currentState # add the parentState=currentState for the child
+                self.openList.append(child) # add childState to openlist
+
+            self.step = self.step+1 #increment step to track iteration
+            
+                # if self.step == 10:
                 #     break;
 
     def printClosedList(self):
@@ -135,12 +114,33 @@ class Astar:
 
 input = '1 2 0 3 5 6 7 4'
 
-puzzle = State(input=input, g=0, f=0)
-# print(puzzle.h0())
-# puzzle.print()
-# puzzle.getMoves()
+puzzle1 = State(input=input, g=0, f=0)
+puzzle2 = State(input=input, g=0, f=6)
+puzzle3 = State(input=input, g=0, f=3)
 
-a = Astar(initial=puzzle, puzzleNumber=0, h_type="h0")
+
+# l=[]
+# l.append(puzzle1)
+# l.append(puzzle2)
+# l.append(puzzle3)
+# for i in l:
+#     print(i.f)
+
+# l  = sorted(l, key=lambda x:x.f, reverse=False)
+
+# for i in l:
+#     print(i.f)
+
+# l.pop()
+# print("..........")
+
+# for i in l:
+#     print(i.f)
+
+
+# e = any((x.f == 3) for x in l)
+# print(e)
+a = Astar(initialState=puzzle1, puzzleNumber=0, h_type="h0")
 a.printClosedList()
 a.searchFile()
 a.solutionFile()

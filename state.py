@@ -12,7 +12,6 @@ class State:
         self.row = 2
         self.col = 4
         self.parent = parent
-        # self.cost = cost
         self.f = f
         self.g = g
         self.totalG = totalG
@@ -42,9 +41,7 @@ class State:
         
     def print(self):
         print(self.puzzle)
-        print("Cumalative G(N): " + str(self.totalG))
-        print("G(N): "+ str(self.g))
-        print("H(N): "+ str(self.h))
+        print("Cu.G(N):" + str(self.totalG) + "\tG(N):"+ str(self.g) + "\tH(N):"+ str(self.h) + "\tF(N):"+ str(self.f))
 
     def getMoves(self):
         moves = []
