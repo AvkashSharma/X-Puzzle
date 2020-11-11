@@ -6,14 +6,6 @@ def stateExists(state, list):
 
 def getStateFromList(state, list):
     for s in list:
-        if (s.puzzle == state.puzzle).all():
+        if (state.puzzle == s.puzzle).all():
             return s
-
-def isGoal1(state, goalState):
-    if (state.puzzle == goalState.puzzle).all():
-        return state
-    return None
-
-def isGoal2():
-    print()
 

@@ -1,29 +1,27 @@
 import numpy as np
-from numpy.lib import utils
-from numpy.lib.type_check import common_type
 import common 
 from state import State
-
-
 
 class Astar:
     openList = [] #openList, States to visit
     closedList = [] #closedList, States we already visited
     step = 0 #number of states visited
 
-    def __init__(self, initialState, puzzleNumber, h_type):
+    def __init__(self, input, puzzleNumber, heuristic="h0"):
         self.puzzleNumber = puzzleNumber #puzzle number used for outputing solution
-        self.h_type = h_type #used to determine the type heuristic function to use
+        self.heuristic = heuristic #used to determine the type heuristic function to use
 
         # intitalize lists
         np.array(self.openList, dtype=State)
         np.array(self.closedList, dtype=State)
-        self.goal1 = State(input='1 2 3 4 5 6 7 0', g=0, f=0)
-        self.goal2 = State(input='1 3 5 7 2 4 6 0', g=0, f=0)
+        self.goal1 = State(input='1 2 3 4 5 6 7 0')
+        self.goal2 = State(input='1 3 5 7 2 4 6 0')
         
-        self.initial = initialState
-        self.openList.append(self.initial)
+        if heuristic !="":
+            state = State(input=input, heuristic=heuristic, goalState1=self.goal1, goalState2=self.goal2)
+            self.initialState = state
 
+        self.openList.append(self.initialState)
         self.start()
     
     def start(self):
@@ -60,94 +58,54 @@ class Astar:
 
                 # g = currentNode.g + distance between child and current
                 # g* cost of lowest cost path from start to node n
-                child.g = currentState.g + child.g #compute g
-
+                # child.totalG = currentState.g + child.g #compute g
                 if common.stateExists(child, self.openList): # check if child in openList
-                    existingState = common.getStateFromList(self.openList, child) 
+                    existingState = common.getStateFromList(child, self.openList) 
                     if child.g > existingState.g: #compare existing state g with child g
                         continue # if child g is bigger then skip loop
 
-                if self.h_type =="h0": child.h = child.h0()
-                elif self.h_type =="h1": child.h = child.h1()
-                elif self.h_type =="h2": child.h = child.h2() #compute h
-                child.f = child.g + child.h #compute f
-
+                child.f = child.totalG + child.h #compute f
 
                 child.parent = currentState # add the parentState=currentState for the child
                 self.openList.append(child) # add childState to openlist
 
             self.step = self.step+1 #increment step to track iteration
             
-                # if self.step == 10:
-                #     break;
-
-    def printClosedList(self):
-        for i in self.closedList:
-            print("\n\n")
-            i.print()
-            if i.parent is not None:
-                print("parent: ")
-                i.parent.print()
+            # if self.step == 10:
+            #     break;
 
     def solutionFile(self):
-        f= open("output/{num}_astar-{h}_solution.txt".format(num=self.puzzleNumber, h=self.h_type),"w+")
-        for i in self.closedList:
+        f= open("output/{num}_astar-{h}_solution.txt".format(num=self.puzzleNumber, h=self.heuristic),"w+")
+        solutionPath =[]
+        backTrackState = self.closedList[len(self.closedList)-1] # get last state from closed list
+        solutionPath.append(backTrackState)
+        while (backTrackState.puzzle != self.initialState.puzzle).any():
+            backTrackState = backTrackState.parent
+            solutionPath.append(backTrackState)
+
+        solutionPath.reverse()
+
+        for i in solutionPath:
             if i.parent is not None:
-                s = str(i.g -i.parent.g)+" "+str(i.puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')
+                s = str(i.parent.g)+" "+str(i.puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')
             else: 
                 s = str(i.g)+" "+str(i.puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')
             f.write(s+'\n')
-        print('solution')
+        s = str(self.closedList[len(self.closedList)-1].totalG) + " " + str("time here goes")
+        f.write(s+'\n')
         f.close()
 
+
     def searchFile(self):
-        f= open("output/{num}_astar-{h}_search.txt".format(num=self.puzzleNumber, h=self.h_type),"w+")
+        f= open("output/{num}_astar-{h}_search.txt".format(num=self.puzzleNumber, h=self.heuristic),"w+")
         for i in self.closedList:
             s = str(i.f)+" "+str(i.g)+" "+str(i.h)+" "+str(i.puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')
             f.write(s+'\n')
-        print('search')
         f.close()
 
+input = '4 2 3 1 5 6 0 7'
 
-
-
-
-input = '1 2 0 3 5 6 7 4'
-
-puzzle1 = State(input=input, g=0, f=0)
-puzzle2 = State(input=input, g=0, f=6)
-puzzle3 = State(input=input, g=0, f=3)
-
-
-# l=[]
-# l.append(puzzle1)
-# l.append(puzzle2)
-# l.append(puzzle3)
-# for i in l:
-#     print(i.f)
-
-# l  = sorted(l, key=lambda x:x.f, reverse=False)
-
-# for i in l:
-#     print(i.f)
-
-# l.pop()
-# print("..........")
-
-# for i in l:
-#     print(i.f)
-
-
-# e = any((x.f == 3) for x in l)
-# print(e)
-a = Astar(initialState=puzzle1, puzzleNumber=0, h_type="h0")
-a.printClosedList()
+a = Astar(input=input, puzzleNumber=0, heuristic="h1")
+# a.printClosedList()
 a.searchFile()
 a.solutionFile()
-
-# a = '1 2 0 3 5 6 7 4'
-# p = State(input=a, g=0, f=0)
-# p.print()
-# m = p.getMoves()
-# for mi in m:
-#     mi.print()
