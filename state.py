@@ -1,10 +1,18 @@
 from math import cos
 import numpy as np
 
+class Move:
+    def __init__(self, tile=0, cost=0, move=0):
+        self.tile = tile
+        self.cost = cost
+        self.move = move
+
 class State:
     def __init__(self, input="", parent=None, puzzle=None, f=0, g=0, totalG=0, h=0, heuristic="", goalState1=None, goalState2=None):
         self.row = 2
         self.col = 4
+        self.parent = parent
+        self.cost = cost
         self.f = f
         self.g = g
         self.totalG = totalG
