@@ -1,6 +1,7 @@
 from math import cos
 import numpy as np
 from state import State
+import time as time
 
 class GBFS:
     def __init__(self, num = 0, initialState=None, input="", heuristic="", steps=0, openList = [], closedList = [], goalState1 = None, goalState2 = None, state=None, foundState=None):
@@ -26,10 +27,10 @@ class GBFS:
     def IsGoalState(self):
         # Is It Goal State
         if (self.state.puzzle == self.goalState1.puzzle).all():
-            print('goal1 found')
+            print('Found Goal 1')
             return True
         elif (self.state.puzzle == self.goalState2.puzzle).all():
-            print('goal2 found')
+            print('Found Goal 2')
             return True
 
         return False
@@ -81,20 +82,20 @@ class GBFS:
 
         if (self.foundState is not None):
             solutionPath = []
-            solutionPathState = self.foundState
-            solutionPath.append(solutionPathState)
+            currentStateOfSolutionPath = self.foundState
+            solutionPath.append(currentStateOfSolutionPath)
             
-            while ((solutionPathState.puzzle) != (self.initialState.puzzle)).any():
-                solutionPathState = solutionPathState.parent
-                solutionPath.append(solutionPathState)
+            while ((currentStateOfSolutionPath.puzzle) != (self.initialState.puzzle)).any():
+                currentStateOfSolutionPath = currentStateOfSolutionPath.parent
+                solutionPath.append(currentStateOfSolutionPath)
                 
             solutionPath.reverse()
             for i in range(0,len(solutionPath)):
                 s = str(i) + " " + str(solutionPath[i].g) + " " + str(solutionPath[i].puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')
                 f.write(s+'\n')
-            s = str(self.foundState.totalG) + " " + str("time here goes")
+            s = str(self.foundState.totalG) + " " + str(end - start)
             f.write(s+'\n')
-            print('Solution')
+            print('Found Solution')
         else:
             f.write("No Solution")
             print("No Solution")
@@ -108,7 +109,7 @@ class GBFS:
             s = "0 0 " + str(i.h) + " "+ str(i.puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')
             f.write(s+'\n')
 
-        print('Search')
+        print('Found Search')
         f.close()
 
 
@@ -121,10 +122,11 @@ goalstate1 = "1 2 3 4 5 6 7 0"
 
 goalstate2 = "1 3 5 7 2 4 6 0"
 
-gbfs = GBFS(num = 0, input = input, heuristic="h1", goalState1=goalstate1, goalState2=goalstate2)
+start = time.time()
+gbfs = GBFS(num = 0, input = input, heuristic="h2", goalState1=goalstate1, goalState2=goalstate2)
 
 gbfs.startGBFS()
-
+end = time.time()
 gbfs.solutionFile()
 
 gbfs.searchFile()
