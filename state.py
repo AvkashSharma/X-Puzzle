@@ -1,24 +1,18 @@
 from math import cos
 import numpy as np
 
-class Move:
-    def __init__(self, tile=0, cost=0, move=0):
-        self.tile = tile
-        self.cost = cost
-        self.move = move
-
 class State:
-    def __init__(self, input="", parent=None, puzzle=None, f=0, g=0, totalG=0, h=0, heuristic="", goalState1=None, goalState2=None):
+    def __init__(self, input="", parent=None, puzzle=None, tileToMove = '0', f=0, g=0, totalG=0, h=0, heuristic="", goalState1=None, goalState2=None):
         self.row = 2
         self.col = 4
-        self.parent = parent
-        # self.cost = cost
         self.f = f
         self.g = g
         self.totalG = totalG
         self.heuristic = heuristic
         self.goalState1 = goalState1
         self.goalState2 = goalState2
+        self.parent = parent
+        self.tileToMove = tileToMove
 
         if input!="":
             inputList = input.split(" ")
@@ -52,28 +46,28 @@ class State:
 
         downMove = self.moveDown(zero)
         if downMove is not None:
-            moves.append(State(parent=self, puzzle=self.swapPosition(zero, downMove), g=1, totalG = self.totalG + 1, heuristic=self.heuristic, goalState1=self.goalState1, goalState2=self.goalState2))
+            moves.append(State(parent=self, puzzle=self.swapPosition(zero, downMove), tileToMove = self.puzzle[downMove[0],downMove[1]], g=1, totalG = self.totalG + 1, heuristic=self.heuristic, goalState1=self.goalState1, goalState2=self.goalState2))
 
         upMove = self.moveUp(zero)
         if upMove is not None:
-            moves.append(State(parent=self, puzzle=self.swapPosition(zero, upMove), g=1, totalG = self.totalG + 1, heuristic=self.heuristic, goalState1=self.goalState1, goalState2=self.goalState2))
+            moves.append(State(parent=self, puzzle=self.swapPosition(zero, upMove), tileToMove = self.puzzle[upMove[0],upMove[1]], g=1, totalG = self.totalG + 1, heuristic=self.heuristic, goalState1=self.goalState1, goalState2=self.goalState2))
 
         leftMove = self.moveLeft(zero)
         if leftMove is not None:
-            moves.append(State(parent=self, puzzle=self.swapPosition(zero, leftMove), g=1, totalG = self.totalG + 1, heuristic=self.heuristic, goalState1=self.goalState1, goalState2=self.goalState2))
+            moves.append(State(parent=self, puzzle=self.swapPosition(zero, leftMove), tileToMove = self.puzzle[leftMove[0],leftMove[1]], g=1, totalG = self.totalG + 1, heuristic=self.heuristic, goalState1=self.goalState1, goalState2=self.goalState2))
 
         rightMove = self.moveRight(zero)
         if rightMove is not None:
-            moves.append(State(parent=self, puzzle=self.swapPosition(zero, rightMove), g=1, totalG = self.totalG + 1, heuristic=self.heuristic, goalState1=self.goalState1, goalState2=self.goalState2))
+            moves.append(State(parent=self, puzzle=self.swapPosition(zero, rightMove), tileToMove = self.puzzle[rightMove[0],rightMove[1]], g=1, totalG = self.totalG + 1, heuristic=self.heuristic, goalState1=self.goalState1, goalState2=self.goalState2))
         
         wrapMove = self.moveWrapper(zero)
         if wrapMove is not None:
-            moves.append(State(parent=self, puzzle=self.swapPosition(zero, wrapMove), g=2, totalG = self.totalG + 2, heuristic=self.heuristic, goalState1=self.goalState1, goalState2=self.goalState2))
+            moves.append(State(parent=self, puzzle=self.swapPosition(zero, wrapMove), tileToMove = self.puzzle[wrapMove[0],wrapMove[1]], g=2, totalG = self.totalG + 2, heuristic=self.heuristic, goalState1=self.goalState1, goalState2=self.goalState2))
 
         diagonalMove = self.moveDiagonal(zero)
         if diagonalMove is not None:
             for diag in diagonalMove:
-                moves.append(State(parent=self, puzzle=self.swapPosition(zero, diag), g=3, totalG = self.totalG + 3, heuristic=self.heuristic, goalState1=self.goalState1, goalState2=self.goalState2))
+                moves.append(State(parent=self, puzzle=self.swapPosition(zero, diag), tileToMove = self.puzzle[diag[0],diag[1]], g=3, totalG = self.totalG + 3, heuristic=self.heuristic, goalState1=self.goalState1, goalState2=self.goalState2))
 
         return moves
 
