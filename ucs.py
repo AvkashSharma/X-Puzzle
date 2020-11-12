@@ -94,16 +94,16 @@ class UniformCostSearch:
     final_state = self.solve()
     solution_path = self.get_solution_path(final_state)   
     solution_path.reverse()
-    s = str(0) + " " + str(0) + " " + str(solutionPath[i].puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')
+
     f = open("output/{num}_ucs_solution.txt".format(num=self.puzzleNumber), "w+")
-    f.write(s+ '\n')
+    for i in range(0,len(solution_path)):
+      s = str(solution_path[i].tileToMove) + " " + str(solution_path[i].g) + " " + str(solution_path[i].puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')   
+      f.write(s+ '\n')
+    
+    s = str(final_state.totalG)
+    f.write(s+'\n')
     f.close()
 
-    for i in range(0,len(solution_path)-1):
-      s = str(solutionPath[i].tileToMove) + " " + str(solutionPath[i].g) + " " + str(solutionPath[i].puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')
-      f = open("output/{num}_ucs_solution.txt".format(num=self.puzzleNumber), "a")
-      f.write(s+ '\n')
-      f.close()
 
   def search_file(self):
     f = open("output/{num}_ucs_search.txt".format(num=self.puzzleNumber), "w+")
