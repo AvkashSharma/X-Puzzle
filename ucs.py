@@ -13,7 +13,8 @@ class UniformCostSearch:
     self.goal2 = State(goal_state2, g = 0)
     self.step_count = 0
     self.open_list.append(self.input_state)
-    self.solve()
+    
+    
 
 
   def isGoalState(self, state):
@@ -40,13 +41,13 @@ class UniformCostSearch:
   def updateIfLowerCost(self,stateToCheck):
     for state in self.open_list:
       if ((state.puzzle == stateToCheck.puzzle).all() and (state.totalG > stateToCheck.totalG)):
-        state.totalG = stateToCheck.totalG
+        state = stateToCheck
 
   
   def solve(self):
     while True:
       self.step_count += 1
-      print("Iteration: " + str(self.step_count))
+      #print("Iteration: " + str(self.step_count))
 
       # if open list is empty -> break
       if not self.open_list:
@@ -58,13 +59,11 @@ class UniformCostSearch:
       # current_state.print()
       
       self.closed_list.append(current_state)
-      print("Closed List: ~~~~~~~~~~~~~~~~~~~~~~~")
-      for cState in self.closed_list:
-        cState.print()
     
 
       # check if current_state is goal_state
       if self.isGoalState(current_state):
+        return current_state
         break
       
       next_states = current_state.getMoves()
@@ -81,16 +80,35 @@ class UniformCostSearch:
         break 
     
 
+
+  def get_solution_path(self,state):
+    path =[]
+    while self.input_state.puzzle.all  != state.puzzle.all:
+      path.append(state)
+      state = state.parent
+    path.append(self.input_state)
+    return path
   
-  def solution_file(self):
+  
+  def solution_file(self):  
+    final_state = self.solve()
+    solution_path = self.get_solution_path(final_state)   
+    solution_path.reverse()
+    s = str(0) + " " + str(0) + " " + str(solutionPath[i].puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')
     f = open("output/{num}_ucs_solution.txt".format(num=self.puzzleNumber), "w+")
-    print("solution")
+    f.write(s+ '\n')
     f.close()
+
+    for i in range(0,len(solution_path)-1):
+      s = str(solutionPath[i].tileToMove) + " " + str(solutionPath[i].g) + " " + str(solutionPath[i].puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')
+      f = open("output/{num}_ucs_solution.txt".format(num=self.puzzleNumber), "a")
+      f.write(s+ '\n')
+      f.close()
 
   def search_file(self):
     f = open("output/{num}_ucs_search.txt".format(num=self.puzzleNumber), "w+")
     for i in self.closed_list:
-      s = str(0)+ " "+ str(i.g)+ " "+ str(0)+ " " +str(i.puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')
+      s = str(0)+ " "+ str(i.g)+ " "+ str(0)+ " " +str(i.puzzle).replace('[','').replace(']','').replace('\n','').replace("'",'')
       f.write(s+'\n')
     print('Search')
     f.close()
@@ -106,4 +124,5 @@ goalstate1 = "1 2 3 4 5 6 7 0"
 goalstate2 = "1 3 5 7 2 4 6 0"
 
 ucs = UniformCostSearch(input,goalstate1,goalstate2,puzzleNumber = 0)
-ucs.search_file()
+#ucs.search_file()
+ucs.solution_file()
