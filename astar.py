@@ -61,7 +61,7 @@ class Astar:
                 # child.totalG = currentState.g + child.g #compute g
                 if common.stateExists(child, self.openList): # check if child in openList
                     existingState = common.getStateFromList(child, self.openList) 
-                    if child.g > existingState.g: #compare existing state g with child g
+                    if child.totalG > existingState.totalG: #compare existing state g with child g
                         continue # if child g is bigger then skip loop
 
                 child.f = child.totalG + child.h #compute f

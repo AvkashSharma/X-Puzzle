@@ -1,9 +1,22 @@
 import os
 from math import cos
+import time as time
+import random
+import common
 from state import State
 #from astar import Astar
 from gbfs import GBFS
-import time as time
+
+inputPath="randomInput.txt"
+
+def generateRandomPuzzle():
+    with open("randomInput.txt", "w") as file:
+        for i in range(0, 50):
+            print(i)
+            r = random.sample(range(8), 8)
+            file.write(common.stateToString(r)+"\n")
+
+
 
 def runAlgorithm(algo):
     print("~~~~~~~~~~~~~~NEW ALGORITHM CALL~~~~~~~~~~~~~~~~~~~~~~")
@@ -123,10 +136,13 @@ astarH0 = "astarH0"
 astarH1 = "astarH1"
 astarH2 = "astarH2"
 
-runAlgorithm(ufc)
-runAlgorithm(gbfsH0)
-runAlgorithm(gbfsH1)
-runAlgorithm(gbfsH2)
-runAlgorithm(astarH0)
-runAlgorithm(astarH1)
-runAlgorithm(astarH2)
+# runAlgorithm(ufc)
+# runAlgorithm(gbfsH0)
+# runAlgorithm(gbfsH1)
+# runAlgorithm(gbfsH2)
+# runAlgorithm(astarH0)
+# runAlgorithm(astarH1)
+# runAlgorithm(astarH2)
+
+
+generateRandomPuzzle()

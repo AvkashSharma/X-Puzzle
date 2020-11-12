@@ -9,3 +9,6 @@ def getStateFromList(state, list):
         if (state.puzzle == s.puzzle).all():
             return s
 
+def stateToString(state):
+    format = str(state).replace('[','').replace(']','').replace('\n','').replace('\'','').replace(',','')
+    return format
