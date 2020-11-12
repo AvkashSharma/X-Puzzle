@@ -43,7 +43,6 @@ class GBFS:
         return False
 
     def getNextState(self):
-        
         nextStates = self.state.getMoves()
         
         for nState in  nextStates:
@@ -92,7 +91,7 @@ class GBFS:
                 
             solutionPath.reverse()
             for i in range(0,len(solutionPath)):
-                s = str(i) + " " + str(solutionPath[i].g) + " " + str(solutionPath[i].puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')
+                s = str(solutionPath[i].tileToMove) + " " + str(solutionPath[i].g) + " " + str(solutionPath[i].puzzle).replace('[','').replace(']','').replace('\n','').replace('\'','')
                 f.write(s+'\n')
             s = str(self.foundState.totalG) + " " + str(timeDuration)
             f.write(s+'\n')
