@@ -34,9 +34,6 @@ def runAlgorithm(algo):
 
     i = 0
     for line in file:
-        #input = "4 2 3 1 5 6 7 0"
-        #input2 = "1 2 3 4 5 6 7 0"
-        #input3 = "1 2 3 4 5 6 0 7"
         print("~~~~~~ Puzzle: " + str(i) + " ~~~~~~~")
 
         start = 0
@@ -136,13 +133,10 @@ astarH0 = "astarH0"
 astarH1 = "astarH1"
 astarH2 = "astarH2"
 
-# runAlgorithm(ufc)
-# runAlgorithm(gbfsH0)
-# runAlgorithm(gbfsH1)
-# runAlgorithm(gbfsH2)
-# runAlgorithm(astarH0)
-# runAlgorithm(astarH1)
-# runAlgorithm(astarH2)
-
-
-generateRandomPuzzle()
+runAlgorithm(ufc)
+runAlgorithm(gbfsH0)
+runAlgorithm(gbfsH1)
+runAlgorithm(gbfsH2)
+runAlgorithm(astarH0)
+runAlgorithm(astarH1)
+runAlgorithm(astarH2)
