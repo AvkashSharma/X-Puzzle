@@ -43,7 +43,7 @@ class Astar:
             # print("Open List: ~~~~~~~~~~~~~~~~~~~~~~~")
             # for oState in self.openList:
             #     oState.print()
-            
+
             # WILLLL HAVE TO CHANGE THIS
             # compare with goals
             if (currentState.puzzle == self.goal1.puzzle).all():
@@ -80,10 +80,10 @@ class Astar:
 
             self.step = self.step+1 #increment step to track iteration
             
-            # if time.time() > startTime+ 60: # stop after 60
-            #     break;
-            if(self.step == 100):
-                break
+            if time.time() > startTime+ 60: # stop after 60
+                break;
+            # if(self.step == 100):
+            #     break
 
     def solutionFile(self, duration):
         f= open("output/{num}_astar-{h}_solution.txt".format(num=self.puzzleNumber, h=self.heuristic),"w+")
@@ -120,6 +120,7 @@ class Astar:
 # input = '3 0 1 4 2 6 5 7'
 
 # a = Astar(input=input, puzzleNumber=0, heuristic="h2")
+# a.start()
 # # a.printClosedList()
 # a.searchFile()
 # a.solutionFile(10)

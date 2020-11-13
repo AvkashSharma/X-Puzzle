@@ -4,6 +4,7 @@ import time as time
 import random
 import common
 from state import State
+from ucs import UniformCostSearch
 from astar import Astar
 from gbfs import GBFS
 
@@ -72,26 +73,25 @@ def runAlgorithm(algo):
         cost = 0
         analysis = None
 
-        # if algo == ufc:
-        #     analysis = algoAnalysis(GBFS(num = i, input = line.strip(), heuristic="h0",  openList = [], closedList = [], goalState1=goalstate1, goalState2=goalstate2))
-        #     break;
+        if algo == ufc:
+            analysis = algoAnalysis(UniformCostSearch(line.strip(),goalstate1,goalstate2,puzzleNumber = i))
 
-        if algo == gbfsH0:
+        elif algo == gbfsH0:
             analysis = algoAnalysis(GBFS(num = i, input = line.strip(), heuristic="h0",  openList = [], closedList = [], goalState1=goalstate1, goalState2=goalstate2))
         
-        if algo == gbfsH1:
+        elif algo == gbfsH1:
             analysis = algoAnalysis(GBFS(num = i, input = line.strip(), heuristic="h1",  openList = [], closedList = [], goalState1=goalstate1, goalState2=goalstate2))
 
-        if algo == gbfsH2:
+        elif algo == gbfsH2:
             analysis = algoAnalysis(GBFS(num = i, input = line.strip(), heuristic="h2",  openList = [], closedList = [], goalState1=goalstate1, goalState2=goalstate2))
 
-        if algo == astarH0:
+        elif algo == astarH0:
             analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h0"))
         
-        if algo == astarH1:
+        elif algo == astarH1:
             analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h1"))
         
-        if algo == astarH2:
+        elif algo == astarH2:
             analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h2"))
 
         duration = analysis[5]
