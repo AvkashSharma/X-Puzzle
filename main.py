@@ -9,7 +9,7 @@ from gbfs import GBFS
 
 # inputPath="randomInput.txt"
 inputPath="samplePuzzles.txt"
-
+os.remove("analysis.csv")
 def generateRandomPuzzle():
     with open("randomInput.txt", "w") as file:
         for i in range(0, 50):
@@ -69,6 +69,7 @@ def runAlgorithm(algo):
         lengthOfSolution = 0
         lengthOfSearch = 0
         duration = 0
+        cost = 0
         analysis = None
 
         # if algo == ufc:
@@ -98,9 +99,9 @@ def runAlgorithm(algo):
         lengthOfSearch = analysis[2]
         
         if analysis[3] == 0:
-            totalCost = analysis[4]
+            cost = analysis[4]
             counter = counter + 1
-        
+        totalCost = totalCost+cost
         totalExecutionTime = totalExecutionTime + duration
         totalLengthOfSearch = totalLengthOfSearch + lengthOfSearch
         if lengthOfSolution != 0:
@@ -108,10 +109,10 @@ def runAlgorithm(algo):
         else:
             totalNoSolution = totalNoSolution + 1
 
-        afile.write(algo +", "+ str(i)+", "+str(totalCost)+", "+str(lengthOfSolution)+", "+str(lengthOfSearch)+", "+str(duration)+","+str(analysis[3])+",,"+line.strip()+"\n")
+        afile.write(algo +", "+ str(i)+", "+str(cost)+", "+str(lengthOfSolution)+", "+str(lengthOfSearch)+", "+str(duration)+","+str(analysis[3])+",,"+line.strip()+"\n")
         i = i + 1
        
-    afile.write("Total-"+algo+","+str(i)+" , "+str(totalLengthOfSolution)+", "+str(totalLengthOfSearch)+", "+str(totalExecutionTime)+","+str(totalNoSolution)+"\n")
+    afile.write("Total-"+algo+","+str(i)+" , "+str(totalCost)+","+str(totalLengthOfSolution)+", "+str(totalLengthOfSearch)+", "+str(totalExecutionTime)+","+str(totalNoSolution)+"\n")
 
     if(i != 0 and counter != 0):
         averageCost = totalCost/counter
