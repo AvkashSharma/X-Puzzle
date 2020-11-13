@@ -95,7 +95,6 @@ class UniformCostSearch:
     path.append(self.input_state)
     return path
   
-  
   def solution_file(self, execution_time):
     f = open("output/{puzzle_number}_ucs_solution.txt".format(puzzle_number=self.puzzle_number), "w+")
     
@@ -114,10 +113,8 @@ class UniformCostSearch:
       f.write("no Solution")
       print("No Solution was Found")
       return 0
-
     f.close()
     
-
 
   def search_file(self):
     f = open("output/{puzzle_number}_ucs_search.txt".format(puzzle_number=self.puzzle_number), "w+")
