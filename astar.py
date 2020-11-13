@@ -23,32 +23,46 @@ class Astar:
             self.initialState = state
 
         self.openList.append(self.initialState)
-        self.start()
+        # self.start()
     
     def start(self):
         startTime = time.time()
         while len(self.openList) > 0:
-            
+
+            self.openList = sorted(self.openList, key=lambda x:x.f, reverse=False)  # sort openList sort by f'
             currentState = self.openList[0]     # get state with smallest f from openlist
             self.openList.remove(currentState)  # remove currentState from openList
             self.closedList.append(currentState);# add currentState to closedList
+            
 
+
+            # print("Closed List: ~~~~~~~~~~~~~~~~~~~~~~~")
+            # for cState in self.closedList:
+            #     cState.print()
+
+            # print("Open List: ~~~~~~~~~~~~~~~~~~~~~~~")
+            # for oState in self.openList:
+            #     oState.print()
+            
             # WILLLL HAVE TO CHANGE THIS
             # compare with goals
             if (currentState.puzzle == self.goal1.puzzle).all():
-                print('goal1 found');
+                # print('goal1 found');
                 self.foundState = currentState
                 break;
 
             elif (currentState.puzzle == self.goal2.puzzle).all():
-                print('goal2 found');
+                # print('goal2 found');
                 self.foundState = currentState
                 break;
 
-            children = currentState.getMoves() #get all possible states for currentState
+            #get all possible states for currentState
             # check if states are in open or closed list
-            for child in children:
+            for child in currentState.getMoves() :
+
                 if common.stateExists(child, self.closedList): # check if child in closedList
+                    # if state exist check if current one is smaller
+                    # then replace
                     continue     # if exist skip the rest of the loop
 
                 # g = currentNode.g + distance between child and current
@@ -66,45 +80,46 @@ class Astar:
 
             self.step = self.step+1 #increment step to track iteration
             
-            if time.time() > startTime+ 60: # stop after 60 seconds
-                break;
+            # if time.time() > startTime+ 60: # stop after 60
+            #     break;
+            if(self.step == 100):
+                break
 
     def solutionFile(self, duration):
         f= open("output/{num}_astar-{h}_solution.txt".format(num=self.puzzleNumber, h=self.heuristic),"w+")
-        
+        lengthOfSolution = 0
         if self.foundState is not None:
-            solutionPath =[]
-            backTrackState = self.closedList[len(self.closedList)-1] # get last state from closed list
+            solutionPath=[]
+            backTrackState = self.foundState # get last state from closed list
             solutionPath.append(backTrackState)
             
-            while (backTrackState.puzzle != self.initialState.puzzle).any():
+            while (backTrackState.puzzle != self.initialState.puzzle).any() and backTrackState.parent is not None:
                 backTrackState = backTrackState.parent
                 solutionPath.append(backTrackState)
 
             solutionPath.reverse()
-
             for i in solutionPath:
-                if i.parent is not None:
-                    f.write(str(i.parent.g)+" "+common.stateToString(i.puzzle)+"\n")
-                else: 
-                    f.write(str(i.g)+" "+common.stateToString(i.puzzle)+"\n")
+                f.write(str(i.tileToMove)+" "+ str(i.g) +" "+common.stateToString(i.puzzle)+"\n")
 
             f.write(str(self.closedList[len(self.closedList)-1].totalG) + " " + str(duration)+"\n")
+            lengthOfSolution = len(solutionPath)
         else:
             f.write("No Solution")
         f.close()
+
+        return lengthOfSolution
 
 
     def searchFile(self):
         f= open("output/{num}_astar-{h}_search.txt".format(num=self.puzzleNumber, h=self.heuristic),"w+")
         for i in self.closedList:
-            s = str(i.f)+" "+str(i.g)+" "+str(i.h)+" "+common.stateToString(i.puzzle)
-            f.write(s+'\n')
+            f.write(str(i.f)+" "+str(i.g)+" "+str(i.h)+" "+common.stateToString(i.puzzle)+'\n')
         f.close()
+        return len(self.closedList)
 
-input = '4 2 3 1 5 6 0 7'
+# input = '3 0 1 4 2 6 5 7'
 
-a = Astar(input=input, puzzleNumber=0, heuristic="h1")
-# a.printClosedList()
-a.searchFile()
-a.solutionFile(10)
+# a = Astar(input=input, puzzleNumber=0, heuristic="h2")
+# # a.printClosedList()
+# a.searchFile()
+# a.solutionFile(10)

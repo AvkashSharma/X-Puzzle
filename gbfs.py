@@ -61,7 +61,8 @@ class GBFS:
 
         return self.openList[0]
 
-    def startGBFS(self):
+    def start(self):
+        startTime = time.time()
         while(True):
             self.steps = self.steps + 1
             #print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nIteration: " + str(self.steps))
@@ -74,6 +75,8 @@ class GBFS:
                 break
             self.state = self.getNextState()
             # putting a temporary break to prevent long results for now
+            # if time.time() > startTime+ 60: # stop after 60
+            #     break;
             if(self.steps == 100):
                 break
 
