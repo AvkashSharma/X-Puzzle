@@ -61,7 +61,8 @@ class GBFS:
 
         return self.openList[0]
 
-    def startGBFS(self):
+    def start(self):
+        startTime = time.time()
         while(True):
             self.steps = self.steps + 1
             #print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nIteration: " + str(self.steps))
@@ -74,8 +75,10 @@ class GBFS:
                 break
             self.state = self.getNextState()
             # putting a temporary break to prevent long results for now
-            if(self.steps == 100):
-                break
+            if time.time() > startTime+ 60: # stop after 60
+                break;
+            # if(self.steps == 100):
+            #     break
 
     def solutionFile(self, timeDuration):
         f= open("output/{num}_gbfs-{h}_solution.txt".format(num=self.num, h=self.heuristic),"w+")
