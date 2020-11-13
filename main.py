@@ -125,7 +125,7 @@ def runAlgorithm(algo):
 
     file.close()
 
-ufc = "ufc"
+ucs = "ucs"
 gbfsH0 = "gbfsH0"
 gbfsH1 = "gbfsH1"
 gbfsH2 = "gbfsH2"
@@ -133,7 +133,7 @@ astarH0 = "astarH0"
 astarH1 = "astarH1"
 astarH2 = "astarH2"
 
-# runAlgorithm(ufc)
+runAlgorithm(ufc)
 runAlgorithm(gbfsH0)
 runAlgorithm(gbfsH1)
 runAlgorithm(gbfsH2)
