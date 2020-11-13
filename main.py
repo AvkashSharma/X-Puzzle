@@ -1,6 +1,7 @@
 import os
 from math import cos
 from state import State
+from ucs import UniformCostSearch
 #from astar import Astar
 from gbfs import GBFS
 import time as time
@@ -31,10 +32,19 @@ def runAlgorithm(algo):
         lengthOfSolution = 0
         lengthOfSearch = 0
 
-        if(algo == ufc):
-            print("UFC: ")
-            # same shit
-            break
+        if(algo == ucs):
+            print("UCS: ")
+            start = time.time()
+            uniform_cost_search = UniformCostSearch(puzzleNumber = i, initial = line.strip(), goal_state1 = goalstate1, goal_state2 = goalstate2)
+            uniform_cost_search.solve()
+            end  = time.time()
+            duration = end - start
+            lengthOfSolution = uniform_cost_search.solution_file(duration)
+            lengthOfSearch = uniform_cost_search.search_file()
+            if uniform_cost_search.foundState is not None:
+                counter = counter + 1
+                averageCost = uniform_cost_search.foundState.totalG
+    
         if(algo == gbfsH0):
             print("GBFS H0: ")
             start = time.time()
@@ -115,7 +125,7 @@ def runAlgorithm(algo):
 
     file.close()
 
-ufc = "ufc"
+ucs = "ucs"
 gbfsH0 = "gbfsH0"
 gbfsH1 = "gbfsH1"
 gbfsH2 = "gbfsH2"
@@ -123,10 +133,10 @@ astarH0 = "astarH0"
 astarH1 = "astarH1"
 astarH2 = "astarH2"
 
-runAlgorithm(ufc)
-runAlgorithm(gbfsH0)
-runAlgorithm(gbfsH1)
-runAlgorithm(gbfsH2)
-runAlgorithm(astarH0)
-runAlgorithm(astarH1)
-runAlgorithm(astarH2)
+runAlgorithm(ucs)
+#runAlgorithm(gbfsH0)
+#runAlgorithm(gbfsH1)
+#runAlgorithm(gbfsH2)
+#runAlgorithm(astarH0)
+#runAlgorithm(astarH1)
+#runAlgorithm(astarH2)
