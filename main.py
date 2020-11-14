@@ -9,13 +9,15 @@ from astar import Astar
 from gbfs import GBFS
 
 # inputPath="randomInput.txt"
-inputPath="samplePuzzles.txt"
-os.remove("analysis.csv")
+
+inputPath="randomInput4x4.txt"
+# inputPath="samplePuzzles.txt"
+# os.remove("analysis.csv")
 def generateRandomPuzzle():
-    with open("randomInput.txt", "w") as file:
-        for i in range(0, 50):
+    with open("randomInput4x4.txt", "w") as file:
+        for i in range(0, 5):
             print(i)
-            r = random.sample(range(8), 8)
+            r = random.sample(range(16), 16)
             file.write(common.stateToString(r)+"\n")
 
 
@@ -53,8 +55,8 @@ def runAlgorithm(algo):
     afile = open("analysis.csv","a")
     afile.write("\nAlgorithm, Puzzle, Cost, Length Of Solution, Length Of Search, Execution, No Solution, Optimality\n")
 
-    goalstate1 = "1 2 3 4 5 6 7 0"
-    goalstate2 = "1 3 5 7 2 4 6 0"
+    goalstate1 = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 0"
+    goalstate2 = "1 5 9 13 2 6 10 14 3 7 11 15 4 8 12 0"
 
     totalLengthOfSolution = 0
     totalLengthOfSearch = 0
@@ -125,6 +127,7 @@ def runAlgorithm(algo):
 
     file.close()
 
+
 ucs = "ucs"
 gbfsH0 = "gbfsH0"
 gbfsH1 = "gbfsH1"
@@ -133,10 +136,10 @@ astarH0 = "astarH0"
 astarH1 = "astarH1"
 astarH2 = "astarH2"
 
-runAlgorithm(ucs)
-runAlgorithm(gbfsH0)
-runAlgorithm(gbfsH1)
-runAlgorithm(gbfsH2)
+# runAlgorithm(ucs)
+# runAlgorithm(gbfsH0)
+# runAlgorithm(gbfsH1)
+# runAlgorithm(gbfsH2)
 runAlgorithm(astarH0)
-runAlgorithm(astarH1)
+# runAlgorithm(astarH1)
 runAlgorithm(astarH2)
