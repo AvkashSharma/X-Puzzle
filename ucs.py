@@ -14,9 +14,9 @@ class UniformCostSearch:
     self.step_count = 0
     self.open_list.append(self.input_state)
     self.foundState = None
+    self.heuristic = ""
     
     
-
 
   def isGoalState(self, state):
     if (state.puzzle == self.goal1.puzzle).all():
@@ -49,7 +49,7 @@ class UniformCostSearch:
         state = stateToCheck
 
   
-  def solve(self):
+  def start(self):
     while True:
       self.step_count += 1
       #print("Iteration: " + str(self.step_count))
@@ -95,7 +95,7 @@ class UniformCostSearch:
     path.append(self.input_state)
     return path
   
-  def solution_file(self, execution_time):
+  def solutionFile(self, execution_time):
     f = open("output/{puzzle_number}_ucs_solution.txt".format(puzzle_number=self.puzzle_number), "w+")
     
     if(self.foundState is not None):
@@ -116,7 +116,7 @@ class UniformCostSearch:
     f.close()
     
 
-  def search_file(self):
+  def searchFile(self):
     f = open("output/{puzzle_number}_ucs_search.txt".format(puzzle_number=self.puzzle_number), "w+")
     for i in self.closed_list:
       s = str(0)+ " "+ str(i.g)+ " "+ str(0)+ " " +str(i.puzzle).replace('[','').replace(']','').replace('\n','').replace("'",'')
