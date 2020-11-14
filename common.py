@@ -5,9 +5,11 @@ def stateExists(state, list):
     return False
 
 def getStateFromList(state, list):
+    i = 0
     for s in list:
         if (state.puzzle == s.puzzle).all():
-            return s
+            return s, i
+        i = i+1
 
 def stateToString(state):
     format = str(state).replace('[','').replace(']','').replace('\n','').replace('\'','').replace(',','')

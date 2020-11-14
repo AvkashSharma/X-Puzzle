@@ -73,7 +73,7 @@ def runAlgorithm(algo):
         cost = 0
         analysis = None
 
-        if algo == ufc:
+        if algo == ucs:
             analysis = algoAnalysis(UniformCostSearch(line.strip(),goalstate1,goalstate2,puzzleNumber = i))
 
         elif algo == gbfsH0:
@@ -86,13 +86,13 @@ def runAlgorithm(algo):
             analysis = algoAnalysis(GBFS(num = i, input = line.strip(), heuristic="h2",  openList = [], closedList = [], goalState1=goalstate1, goalState2=goalstate2))
 
         elif algo == astarH0:
-            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h0"))
+            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h0", goalState1=goalstate1, goalState2=goalstate2))
         
         elif algo == astarH1:
-            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h1"))
+            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h1", goalState1=goalstate1, goalState2=goalstate2))
         
         elif algo == astarH2:
-            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h2"))
+            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h2", goalState1=goalstate1, goalState2=goalstate2))
 
         duration = analysis[5]
         lengthOfSolution = analysis[1]
@@ -133,7 +133,7 @@ astarH0 = "astarH0"
 astarH1 = "astarH1"
 astarH2 = "astarH2"
 
-runAlgorithm(ufc)
+# runAlgorithm(ucs)
 runAlgorithm(gbfsH0)
 runAlgorithm(gbfsH1)
 runAlgorithm(gbfsH2)
