@@ -74,7 +74,7 @@ def runAlgorithm(algo):
         analysis = None
 
         if algo == ucs:
-            analysis = algoAnalysis(UniformCostSearch(line.strip(),goalstate1,goalstate2,puzzleNumber = i))
+            analysis = algoAnalysis(UniformCostSearch(puzzleNumber = i, initial = line.strip(), goal_state1 = goalstate1,goal_state2 = goalstate2))
 
         elif algo == gbfsH0:
             analysis = algoAnalysis(GBFS(num = i, input = line.strip(), heuristic="h0",  openList = [], closedList = [], goalState1=goalstate1, goalState2=goalstate2))
@@ -111,7 +111,7 @@ def runAlgorithm(algo):
 
         afile.write(algo +", "+ str(i)+", "+str(cost)+", "+str(lengthOfSolution)+", "+str(lengthOfSearch)+", "+str(duration)+","+str(analysis[3])+",,"+line.strip()+"\n")
         i = i + 1
-       
+
     afile.write("Total-"+algo+","+str(i)+" , "+str(totalCost)+","+str(totalLengthOfSolution)+", "+str(totalLengthOfSearch)+", "+str(totalExecutionTime)+","+str(totalNoSolution)+"\n")
 
     if(i != 0 and counter != 0):
@@ -133,7 +133,7 @@ astarH0 = "astarH0"
 astarH1 = "astarH1"
 astarH2 = "astarH2"
 
-# runAlgorithm(ucs)
+runAlgorithm(ucs)
 runAlgorithm(gbfsH0)
 runAlgorithm(gbfsH1)
 runAlgorithm(gbfsH2)
