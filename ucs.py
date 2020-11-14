@@ -1,5 +1,6 @@
 import numpy as np
 from state import State
+import time
 
 
 class UniformCostSearch:
@@ -50,6 +51,7 @@ class UniformCostSearch:
 
   
   def start(self):
+    startTime = time.time()
     while True:
       self.step_count += 1
       #print("Iteration: " + str(self.step_count))
@@ -80,9 +82,11 @@ class UniformCostSearch:
         elif not (self.stateExists(state, self.closed_list)) and (self.stateExists(state, self.open_list)):
           self.updateIfLowerCost(state)
 
-      
-      if(self.step_count == 100):
-        break 
+      if time.time() > startTime + 60:
+        break
+
+      # if(self.step_count == 100):
+      #   break 
     
 
 
