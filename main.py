@@ -86,13 +86,13 @@ def runAlgorithm(algo):
             analysis = algoAnalysis(GBFS(num = i, input = line.strip(), heuristic="h2",  openList = [], closedList = [], goalState1=goalstate1, goalState2=goalstate2))
 
         elif algo == astarH0:
-            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h0"))
+            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h0", goalState1=goalstate1, goalState2=goalstate2))
         
         elif algo == astarH1:
-            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h1"))
+            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h1", goalState1=goalstate1, goalState2=goalstate2))
         
         elif algo == astarH2:
-            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h2"))
+            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h2", goalState1=goalstate1, goalState2=goalstate2))
 
         duration = analysis[5]
         lengthOfSolution = analysis[1]
@@ -134,9 +134,9 @@ astarH1 = "astarH1"
 astarH2 = "astarH2"
 
 runAlgorithm(ucs)
-#runAlgorithm(gbfsH0)
-#runAlgorithm(gbfsH1)
-#runAlgorithm(gbfsH2)
-#runAlgorithm(astarH0)
-#runAlgorithm(astarH1)
-#runAlgorithm(astarH2)
+runAlgorithm(gbfsH0)
+runAlgorithm(gbfsH1)
+runAlgorithm(gbfsH2)
+runAlgorithm(astarH0)
+runAlgorithm(astarH1)
+runAlgorithm(astarH2)
