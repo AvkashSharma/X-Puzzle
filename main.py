@@ -90,13 +90,16 @@ def runAlgorithm(algo):
             analysis = algoAnalysis(GBFS(num = i, input = line.strip(), heuristic="h2",  openList = [], closedList = [], goalState1=goalstate1, goalState2=goalstate2))
 
         elif algo == astarH0:
-            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h0", goalState1=goalstate1, goalState2=goalstate2))
+            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h0", goalState1=goalstate1, goalState2=goalstate2, monotonic=False))
         
         elif algo == astarH1:
-            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h1", goalState1=goalstate1, goalState2=goalstate2))
+            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h1", goalState1=goalstate1, goalState2=goalstate2, monotonic = False))
         
         elif algo == astarH2:
-            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h2", goalState1=goalstate1, goalState2=goalstate2))
+            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h2", goalState1=goalstate1, goalState2=goalstate2, monotonic=False))
+        
+        elif algo == astarH3:
+            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h3", goalState1=goalstate1, goalState2=goalstate2, monotonic=False))
 
         duration = analysis[5]
         lengthOfSolution = analysis[1]
@@ -126,7 +129,6 @@ def runAlgorithm(algo):
         averageNoSolution = totalNoSolution/i
 
     afile.write("Average-"+algo+", , "+str(averageCost)+","+str(averageLengthOfSolution)+", "+str(averageLengthOfSearch)+", "+str(averageExecutionTime)+","+str(averageNoSolution)+"\n")
-
     file.close()
 
 ucs = "ucs"
@@ -139,6 +141,15 @@ astarH2 = "astarH2"
 
 print("Welcome to X-Puzzle")
 choice = ''; 
+astarH3 = "astarH3"
+runAlgorithm(ucs)
+runAlgorithm(gbfsH0)
+runAlgorithm(gbfsH1)
+runAlgorithm(gbfsH2)
+runAlgorithm(astarH0)
+runAlgorithm(astarH1)
+runAlgorithm(astarH2)
+runAlgorithm(astarH3)
 
 while choice != 'q':
     print("\n[1] Enter 1 to solve the puzzle using uniform cost search. ")

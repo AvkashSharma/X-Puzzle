@@ -6,10 +6,10 @@ import time
 class Astar:
     step = 0 #number of states visited
     foundState = None
-    def __init__(self, input, puzzleNumber, heuristic="h0", goalState1 = None, goalState2 = None):
+    def __init__(self, input, puzzleNumber, heuristic="h0", goalState1 = None, goalState2 = None, monotonic=False):
         self.puzzleNumber = puzzleNumber #puzzle number used for outputing solution
         self.heuristic = heuristic #used to determine the type heuristic function to use
-
+        self.monotonic = monotonic
         # intitalize lists
         self.openList = [] #openList, States to visit
         self.closedList = [] #closedList, States we already visited
@@ -54,7 +54,7 @@ class Astar:
             for child in currentState.getMoves() :
                 child.parent = currentState
                 child.f = child.totalG + child.h    #compute f
-                if common.stateExists(child, self.closedList):
+                if common.stateExists(child, self.closedList) and not self.monotonic:
                     inClosed = common.getStateFromList(child, self.closedList)
                     inClosedState = inClosed[0]
                     inClosedIndex  = inClosed[1]
