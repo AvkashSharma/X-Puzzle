@@ -182,7 +182,7 @@ while choice != 'q':
     elif choice == '9':
         runAlgorithm(astarH3)
     elif choice == '10':
-        inputPath = "randomInput.txt"
+        inputPath = "samplePuzzles.txt"
         runAlgorithm(ucs)
         # runAlgorithm(gbfsH0)
         runAlgorithm(gbfsH1)
