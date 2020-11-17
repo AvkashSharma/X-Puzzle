@@ -21,12 +21,12 @@ class UniformCostSearch:
 
   def isGoalState(self, state):
     if (state.puzzle == self.goal1.puzzle).all():
-      print('Goal1 Found')
+      print('UCS - Goal1 Found')
       self.foundState = state
       print(self.foundState.puzzle)
       return True
     if (state.puzzle == self.goal2.puzzle).all():
-      print('Goal2 Found')
+      print('UCS - Goal2 Found')
       self.foundState = state
       print(self.foundState.puzzle)
       return True
