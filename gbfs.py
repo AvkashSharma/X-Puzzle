@@ -28,10 +28,10 @@ class GBFS:
     def IsGoalState(self):
         # Is It Goal State
         if (self.state.puzzle == self.goalState1.puzzle).all():
-            print('Found Goal 1')
+            print('GBFS - Found Goal 1')
             return True
         elif (self.state.puzzle == self.goalState2.puzzle).all():
-            print('Found Goal 2')
+            print('GBFS - Found Goal 2')
             return True
 
         return False

@@ -9,7 +9,7 @@ class Astar:
     def __init__(self, input, puzzleNumber, heuristic="h0", goalState1 = None, goalState2 = None, monotonic=False):
         self.puzzleNumber = puzzleNumber #puzzle number used for outputing solution
         self.heuristic = heuristic #used to determine the type heuristic function to use
-        self.monotonic = monotonic
+        self.monotonic = monotonic #used to determine wheather to iterate in the closed list
         # intitalize lists
         self.openList = [] #openList, States to visit
         self.closedList = [] #closedList, States we already visited
@@ -40,12 +40,12 @@ class Astar:
             self.closedList.append(currentState);# add currentState to closedList
             
             if (currentState.puzzle == self.goal1.puzzle).all():
-                print('Astar goal1 found');
+                print('Astar - goal1 found');
                 self.foundState = currentState
                 break;
 
             elif (currentState.puzzle == self.goal2.puzzle).all():
-                print('Astar goal2 found');
+                print('Astar - goal2 found');
                 self.foundState = currentState
                 break;
 
@@ -114,10 +114,3 @@ class Astar:
         f.close()
         return len(self.closedList)
 
-# input = '1 0 3 6 5 2 7 4'
-
-# a = Astar(input=input, puzzleNumber=0, heuristic="h2")
-# a.start()
-# # a.printClosedList()
-# a.searchFile()
-# a.solutionFile(10)

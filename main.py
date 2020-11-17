@@ -35,8 +35,8 @@ def analysis():
 
 
 def algoAnalysis(algorithm):
-    start = time.time()
     algo = algorithm
+    start = time.time()
     algo.start()
     end = time.time()
     duration = end-start
@@ -50,7 +50,6 @@ def algoAnalysis(algorithm):
         cost = algo.foundState.totalG
 
     return heuristic, lenOfSolution, lenOfSearch, noSolution, cost, duration
-
 
 def runAlgorithm(algo):
     file = open(inputPath,"r")
@@ -88,6 +87,9 @@ def runAlgorithm(algo):
 
         elif algo == gbfsH2:
             analysis = algoAnalysis(GBFS(num = i, input = line.strip(), heuristic="h2",  openList = [], closedList = [], goalState1=goalstate1, goalState2=goalstate2))
+        
+        elif algo == gbfsH3:
+            analysis = algoAnalysis(GBFS(num = i, input = line.strip(), heuristic="h3",  openList = [], closedList = [], goalState1=goalstate1, goalState2=goalstate2))
 
         elif algo == astarH0:
             analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h0", goalState1=goalstate1, goalState2=goalstate2, monotonic=False))
@@ -96,7 +98,7 @@ def runAlgorithm(algo):
             analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h1", goalState1=goalstate1, goalState2=goalstate2, monotonic = False))
         
         elif algo == astarH2:
-            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h2", goalState1=goalstate1, goalState2=goalstate2, monotonic=False))
+            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h2", goalState1=goalstate1, goalState2=goalstate2, monotonic=True))
         
         elif algo == astarH3:
             analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h3", goalState1=goalstate1, goalState2=goalstate2, monotonic=False))
@@ -119,7 +121,7 @@ def runAlgorithm(algo):
         afile.write(algo +", "+ str(i)+", "+str(cost)+", "+str(lengthOfSolution)+", "+str(lengthOfSearch)+", "+str(duration)+","+str(analysis[3])+",,"+line.strip()+"\n")
         i = i + 1
 
-    afile.write("Total-"+algo+","+str(i)+" , "+str(totalCost)+","+str(totalLengthOfSolution)+", "+str(totalLengthOfSearch)+", "+str(totalExecutionTime)+","+str(totalNoSolution)+"\n")
+    afile.write("Total-"+algo+", , "+str(totalCost)+","+str(totalLengthOfSolution)+", "+str(totalLengthOfSearch)+", "+str(totalExecutionTime)+","+str(totalNoSolution)+"\n")
 
     if(i != 0 and counter != 0):
         averageCost = totalCost/counter
@@ -130,35 +132,33 @@ def runAlgorithm(algo):
 
     afile.write("Average-"+algo+", , "+str(averageCost)+","+str(averageLengthOfSolution)+", "+str(averageLengthOfSearch)+", "+str(averageExecutionTime)+","+str(averageNoSolution)+"\n")
     file.close()
+    afile.close()
 
 ucs = "ucs"
 gbfsH0 = "gbfsH0"
 gbfsH1 = "gbfsH1"
 gbfsH2 = "gbfsH2"
+gbfsH3 = "gbfsH3"
 astarH0 = "astarH0"
 astarH1 = "astarH1"
 astarH2 = "astarH2"
+astarH3 = "astarH3"
 
 print("Welcome to X-Puzzle")
 choice = ''; 
-astarH3 = "astarH3"
-runAlgorithm(ucs)
-runAlgorithm(gbfsH0)
-runAlgorithm(gbfsH1)
-runAlgorithm(gbfsH2)
-runAlgorithm(astarH0)
-runAlgorithm(astarH1)
-runAlgorithm(astarH2)
-runAlgorithm(astarH3)
 
 while choice != 'q':
+    print("\nMake sure the samplePuzzles.txt file is the main directory ")
     print("\n[1] Enter 1 to solve the puzzle using uniform cost search. ")
-    print("[2] Enter 2 to solve the puzzle using greedy best first search with h0. ")
-    print("[3] Enter 3 to solve the puzzle using greedy best first search with h1. ")
-    print("[4] Enter 4 to solve the puzzle using greedy best first search with h2. ")
-    print("[5] Enter 5 to solve the puzzle using A* with h0. ")
-    print("[6] Enter 6 to solve the puzzle using A* with h1. ")
-    print("[7] Enter 7 to solve the puzzle using A* with h2. ")
+    print("[2] Enter 2 to solve the puzzle using greedy best first search with h0. (Given Heuristic)")
+    print("[3] Enter 3 to solve the puzzle using greedy best first search with h1. (Hamming Distance)")
+    print("[4] Enter 4 to solve the puzzle using greedy best first search with h2. (Custom Manhattan)")
+    print("[5] Enter 5 to solve the puzzle using greedy best first search with h3. (Sum of Permutation)")
+    print("[6] Enter 6 to solve the puzzle using A* with h0. (Given Heuristic)")
+    print("[7] Enter 7 to solve the puzzle using A* with h1. (Hamming Distance) uses monotonic method")
+    print("[8] Enter 8 to solve the puzzle using A* with h2. (Custom Manhattan)")
+    print("[9] Enter 9 to solve the puzzle using A* with h3. (Sum of Permutation)")
+    print("[10] Enter 10 to run analysis on all search methods with h0, h1, h2 as heuristics using samplePuzzle.txt ")
     print("[q] Enter q to quit. ")
 
     choice = input("\nHow would you like to solve the puzzle? ")
@@ -172,21 +172,32 @@ while choice != 'q':
     elif choice == '4':
         runAlgorithm(gbfsH2)
     elif choice == '5':
-        runAlgorithm(astarH0)
+        runAlgorithm(gbfsH3)
     elif choice == '6':
-        runAlgorithm(astarH1)
+        runAlgorithm(astarH0)
     elif choice == '7':
+        runAlgorithm(astarH1)
+    elif choice == '8':
         runAlgorithm(astarH2)
+    elif choice == '9':
+        runAlgorithm(astarH3)
+    elif choice == '10':
+        inputPath = "randomInput.txt"
+        runAlgorithm(ucs)
+        # runAlgorithm(gbfsH0)
+        runAlgorithm(gbfsH1)
+        runAlgorithm(gbfsH2)
+        # runAlgorithm(gbfsH3)
+        # runAlgorithm(astarH0)
+        runAlgorithm(astarH1)
+        runAlgorithm(astarH2)
+        # runAlgorithm(astarH3)
+        print("\nYou can find the result in the analysis.csv :)\n")
     elif choice == 'q':
         print("\nThanks for playing. Hope you were impressed :)\n")
     else:
         print("\nI don't understand that choice, please try again.\n")
 
 
-%runAlgorithm(ucs)
-%runAlgorithm(gbfsH0)
-%runAlgorithm(gbfsH1)
-%runAlgorithm(gbfsH2)
-%runAlgorithm(astarH0)
-%runAlgorithm(astarH1)
+
 

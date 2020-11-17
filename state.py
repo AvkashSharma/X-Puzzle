@@ -40,6 +40,7 @@ class State:
         print(self.puzzle)
         print("Cu.G(N):" + str(self.totalG) + "\tG(N):"+ str(self.g) + "\tH(N):"+ str(self.h) + "\tF(N):"+ str(self.f))
 
+# get children state/moves/nodes of current state
     def getMoves(self):
         moves = []
         zero = self.getPosition('0')
@@ -140,7 +141,7 @@ class State:
             return np.array([[r1, c1], [r2, c2]])
         return None
 
-
+    # check if given tile is a corner tile
     def isCorner(self, pos):
         r = pos[0]
         c = pos[1]
@@ -181,7 +182,7 @@ class State:
         return counter
 
     # Sum of Permutation
-    def h2(self):
+    def h3(self):
         counter = 0
         counter1 = 0
         counter2 = 0
@@ -202,82 +203,36 @@ class State:
         return counter
 
     # Manhattan
-    def h3(self):
+    # It follows the normal manhattan algotrithm but we have modified so if its a corner then h=1 else h=manhattan distance
+    def h2(self):
         singleArray = self.puzzle.flatten()
         g1Counter = 0
         g2Counter = 0
-        # outputGoal1 = []
-        # outputGoal2 = []
         for i in singleArray:
             if i != '0':
                 position = self.getPosition(i)   
                 goal1Position = self.getGoal1Position(i)
                 goal2Position = self.getGoal2Position(i)
-                # print('Puzzle ' + str(position)+str(i))
-                # if(position == goal1Position).all():
-                # outputGoal1.append(0)
-                #     # return 0
-                # # elif(position == goal2Position).all():
-                #     outputGoal2.append(0)
-                #     # return 0
-                # else:
                 goal1 = abs(position[0]-goal1Position[0]) + abs(position[1]-goal1Position[1])
                 goal2 = abs(position[0]-goal2Position[0])+ abs(position[1]-goal2Position[1])
                 if self.isCorner(position):
                     if goal2 != 0: 
                         g2Counter = g2Counter+1
-                        # outputGoal2.append(1)
-                        # outputGoal2.append(goal2 -1)
                     else:
                         g2Counter = g2Counter + goal2
-                        # outputGoal2.append(goal2)
                     if goal1 != 0: 
                         g1Counter = g1Counter + 1
-                        # outputGoal1.append(1)
-                        # outputGoal1.append(goal1 -1)
                     else:
                         g1Counter = g1Counter + goal1
-                        # outputGoal1.append(goal1)
+
                 else:
                     g1Counter = g1Counter + goal1
                     g2Counter = g2Counter + goal2
-                    # outputGoal2.append(goal2)
-                    # outputGoal1.append(goal1)
-                # if goal1 >goal2:
-                #     print('goal2')
-                #     outputGoal2.append(goal2)
-                #     # return goal2
-                # # return goal1
-                # else:
-                #     outputGoal1.append(goal1)
 
         if g1Counter > g2Counter:
             return g2Counter
         else:
             return g1Counter
-        # return g2Counter, g1Counter
-        # , sum(outputGoal1), sum(outputGoal2)
-            # print('Puzzle ' + str(self.getPosition(i))+str(i))
-            
-            # print('Goal1 ' + str(self.getGoal1Position(i))+str(i))
-            # print('Goal2 ' + str(self.getGoal2Position(i))+str(i))
-
-            # print(self.getGoal1Position(i))
-
-
-
-        # pos = self.getPosition('0')
-        # distance1 = distance2 = 0
-        # if self.isCorner(pos):
-        #     return 0
-
-        # for r in range(self.row):
-        #     for c in range(self.col):
-        #         print(c)
-        # loop through all position
-        # compare with position of goal1 and goal 2
-        # if out position then then calculate how to get to original position of that goal
-        # return 1
 
     def findMissPlacedTiles(self, startIndex, endIndex, currentPuzzel, goalPuzzle):
         counter = 0
@@ -297,16 +252,3 @@ class State:
                 arrayOfGoalPuzzleBeforeIndex = goalPuzzle[0:i]
                 break
         return arrayOfGoalPuzzleBeforeIndex
-
-
-# goalState1 = "1 2 3 4 5 6 7 0"
-# goalState2 = "1 3 5 7 2 4 6 0"
-# goal1 = State(input=goalState1)
-# goal2 = State(input=goalState2)
-
-# input="1 2 3 4 5 6 7 0"
-
-# state = State(input=input, heuristic="h3", goalState1=goal1, goalState2=goal2)
-
-# state.print()
-# print("h3: " +str(state.h3()))
