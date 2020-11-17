@@ -1,4 +1,5 @@
 import os
+from os import path
 from math import cos
 import time as time
 import random
@@ -10,7 +11,10 @@ from gbfs import GBFS
 
 # inputPath="randomInput.txt"
 inputPath="samplePuzzles.txt"
-os.remove("analysis.csv")
+if path.exists("analysis.csv"):
+    os.remove("analysis.csv")
+
+
 def generateRandomPuzzle():
     with open("randomInput.txt", "w") as file:
         for i in range(0, 50):
@@ -133,10 +137,45 @@ astarH0 = "astarH0"
 astarH1 = "astarH1"
 astarH2 = "astarH2"
 
-runAlgorithm(ucs)
-runAlgorithm(gbfsH0)
-runAlgorithm(gbfsH1)
-runAlgorithm(gbfsH2)
-runAlgorithm(astarH0)
-runAlgorithm(astarH1)
-runAlgorithm(astarH2)
+print("Welcome to X-Puzzle")
+choice = ''; 
+
+while choice != 'q':
+    print("\n[1] Enter 1 to solve the puzzle using uniform cost search. ")
+    print("[2] Enter 2 to solve the puzzle using greedy best first search with h0. ")
+    print("[3] Enter 3 to solve the puzzle using greedy best first search with h1. ")
+    print("[4] Enter 4 to solve the puzzle using greedy best first search with h2. ")
+    print("[5] Enter 5 to solve the puzzle using A* with h0. ")
+    print("[6] Enter 6 to solve the puzzle using A* with h1. ")
+    print("[7] Enter 7 to solve the puzzle using A* with h2. ")
+    print("[q] Enter q to quit. ")
+
+    choice = input("\nHow would you like to solve the puzzle? ")
+
+    if choice == '1':
+        runAlgorithm(ucs)
+    elif choice == '2':
+        runAlgorithm(gbfsH0)
+    elif choice == '3':
+        runAlgorithm(gbfsH1)
+    elif choice == '4':
+        runAlgorithm(gbfsH2)
+    elif choice == '5':
+        runAlgorithm(astarH0)
+    elif choice == '6':
+        runAlgorithm(astarH1)
+    elif choice == '7':
+        runAlgorithm(astarH2)
+    elif choice == 'q':
+        print("\nThanks for playing. Hope you were impressed :)\n")
+    else:
+        print("\nI don't understand that choice, please try again.\n")
+
+
+%runAlgorithm(ucs)
+%runAlgorithm(gbfsH0)
+%runAlgorithm(gbfsH1)
+%runAlgorithm(gbfsH2)
+%runAlgorithm(astarH0)
+%runAlgorithm(astarH1)
+
