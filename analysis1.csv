@@ -1,0 +1,56 @@
+
+Algorithm, Puzzle, Cost, Length Of Solution, Length Of Search, Execution, No Solution, Optimality
+ucs, 0, 0, 0, 2361, 60.04027056694031,1,,3 0 1 4 2 6 5 7
+ucs, 1, 0, 0, 2359, 60.016701221466064,1,,6 3 4 7 1 2 5 0
+ucs, 2, 9, 10, 1239, 17.63669490814209,0,,1 0 3 6 5 2 7 4
+Total-ucs,3 , 9,10, 5959, 137.69366669654846,2
+Average-ucs, , 9.0,10.0, 1986.3333333333333, 137.69366669654846,0.6666666666666666
+
+Algorithm, Puzzle, Cost, Length Of Solution, Length Of Search, Execution, No Solution, Optimality
+gbfsH0, 0, 0, 0, 2626, 60.02259850502014,1,,3 0 1 4 2 6 5 7
+gbfsH0, 1, 12, 9, 2293, 45.07757544517517,0,,6 3 4 7 1 2 5 0
+gbfsH0, 2, 0, 0, 2591, 60.03425884246826,1,,1 0 3 6 5 2 7 4
+Total-gbfsH0,3 , 12,9, 7510, 165.13443279266357,2
+Average-gbfsH0, , 12.0,9.0, 2503.3333333333335, 165.13443279266357,0.6666666666666666
+
+Algorithm, Puzzle, Cost, Length Of Solution, Length Of Search, Execution, No Solution, Optimality
+gbfsH1, 0, 19, 13, 33, 0.01823735237121582,0,,3 0 1 4 2 6 5 7
+gbfsH1, 1, 40, 23, 71, 0.0892949104309082,0,,6 3 4 7 1 2 5 0
+gbfsH1, 2, 17, 10, 39, 0.028748512268066406,0,,1 0 3 6 5 2 7 4
+Total-gbfsH1,3 , 76,46, 143, 0.13628077507019043,0
+Average-gbfsH1, , 25.333333333333332,15.333333333333334, 47.666666666666664, 0.04542692502339681,0.0
+
+Algorithm, Puzzle, Cost, Length Of Solution, Length Of Search, Execution, No Solution, Optimality
+gbfsH2, 0, 20, 13, 56, 0.08118224143981934,0,,3 0 1 4 2 6 5 7
+gbfsH2, 1, 18, 11, 14, 0.012939691543579102,0,,6 3 4 7 1 2 5 0
+gbfsH2, 2, 26, 16, 38, 0.04847908020019531,0,,1 0 3 6 5 2 7 4
+Total-gbfsH2,3 , 64,40, 108, 0.14260101318359375,0
+Average-gbfsH2, , 21.333333333333332,13.333333333333334, 36.0, 0.047533671061197914,0.0
+
+Algorithm, Puzzle, Cost, Length Of Solution, Length Of Search, Execution, No Solution, Optimality
+astarH0, 0, 0, 0, 2281, 60.022146463394165,1,,3 0 1 4 2 6 5 7
+astarH0, 1, 0, 0, 2437, 60.02067232131958,1,,6 3 4 7 1 2 5 0
+astarH0, 2, 9, 10, 701, 5.36881685256958,0,,1 0 3 6 5 2 7 4
+Total-astarH0,3 , 9,10, 5419, 125.41163563728333,2
+Average-astarH0, , 9.0,10.0, 1806.3333333333333, 125.41163563728333,0.6666666666666666
+
+Algorithm, Puzzle, Cost, Length Of Solution, Length Of Search, Execution, No Solution, Optimality
+astarH1, 0, 13, 11, 599, 4.137764930725098,0,,3 0 1 4 2 6 5 7
+astarH1, 1, 12, 9, 355, 1.4461536407470703,0,,6 3 4 7 1 2 5 0
+astarH1, 2, 9, 10, 66, 0.06598424911499023,0,,1 0 3 6 5 2 7 4
+Total-astarH1,3 , 34,30, 1020, 5.649902820587158,0
+Average-astarH1, , 11.333333333333334,10.0, 340.0, 1.8833009401957195,0.0
+
+Algorithm, Puzzle, Cost, Length Of Solution, Length Of Search, Execution, No Solution, Optimality
+astarH2, 0, 13, 11, 893, 9.035743474960327,0,,3 0 1 4 2 6 5 7
+astarH2, 1, 12, 9, 218, 0.6701576709747314,0,,6 3 4 7 1 2 5 0
+astarH2, 2, 9, 10, 70, 0.10172796249389648,0,,1 0 3 6 5 2 7 4
+Total-astarH2,3 , 34,30, 1181, 9.807629108428955,0
+Average-astarH2, , 11.333333333333334,10.0, 393.6666666666667, 3.269209702809652,0.0
+
+Algorithm, Puzzle, Cost, Length Of Solution, Length Of Search, Execution, No Solution, Optimality
+astarH3, 0, 13, 11, 749, 6.682677507400513,0,,3 0 1 4 2 6 5 7
+astarH3, 1, 12, 9, 299, 1.4556782245635986,0,,6 3 4 7 1 2 5 0
+astarH3, 2, 9, 10, 139, 0.4432566165924072,0,,1 0 3 6 5 2 7 4
+Total-astarH3,3 , 34,30, 1187, 8.581612348556519,0
+Average-astarH3, , 11.333333333333334,10.0, 395.6666666666667, 2.8605374495188394,0.0
