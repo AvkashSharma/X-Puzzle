@@ -1,4 +1,5 @@
 import os
+from os import path
 from math import cos
 import time as time
 import random
@@ -10,7 +11,10 @@ from gbfs import GBFS
 
 # inputPath="randomInput.txt"
 inputPath="samplePuzzles.txt"
-os.remove("analysis.csv")
+if path.exists("analysis.csv"):
+    os.remove("analysis.csv")
+
+
 def generateRandomPuzzle():
     with open("randomInput.txt", "w") as file:
         for i in range(0, 50):
