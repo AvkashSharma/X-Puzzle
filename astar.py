@@ -84,7 +84,7 @@ class Astar:
 
             self.step = self.step+1 #increment step to track iteration
             
-            if time.time() > startTime+ 60: # stop after 60
+            if time.time() > startTime+ 600: # stop after 60
                 break;
             # if(self.step == 100):
             #     break
