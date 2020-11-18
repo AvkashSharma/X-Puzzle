@@ -52,8 +52,14 @@ class Astar:
             #get all possible states for currentState
             # check if states are in open or closed list
             for child in currentState.getMoves() :
+                # if currentState.h - child.h <= child.g - currentState.g:
+                #     print('Mono: '+str(currentState.h - child.h) +', '+ str(child.g - currentState.g) )
+                    
+                # else: print('NON - Monotonic '+str(currentState.h - child.h) +', '+ str(child.g - currentState.g))
+                
                 child.parent = currentState
                 child.f = child.totalG + child.h    #compute f
+                # Check closed List
                 if common.stateExists(child, self.closedList) and not self.monotonic:
                     inClosed = common.getStateFromList(child, self.closedList)
                     inClosedState = inClosed[0]
@@ -64,6 +70,7 @@ class Astar:
                     else:
                         continue
 
+                # check openlist
                 elif common.stateExists(child, self.openList):
                     inOpen = common.getStateFromList(child, self.openList)
                     inOpenState = inOpen[0]

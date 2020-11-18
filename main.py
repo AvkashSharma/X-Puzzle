@@ -1,6 +1,5 @@
 import os
 from os import path
-from math import cos
 import time as time
 import random
 import common
@@ -95,10 +94,10 @@ def runAlgorithm(algo):
             analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h0", goalState1=goalstate1, goalState2=goalstate2, monotonic=False))
         
         elif algo == astarH1:
-            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h1", goalState1=goalstate1, goalState2=goalstate2, monotonic = False))
+            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h1", goalState1=goalstate1, goalState2=goalstate2, monotonic =False))
         
         elif algo == astarH2:
-            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h2", goalState1=goalstate1, goalState2=goalstate2, monotonic=True))
+            analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h2", goalState1=goalstate1, goalState2=goalstate2, monotonic=False))
         
         elif algo == astarH3:
             analysis = algoAnalysis(Astar(puzzleNumber = i, input = line.strip(), heuristic="h3", goalState1=goalstate1, goalState2=goalstate2, monotonic=False))
@@ -123,11 +122,11 @@ def runAlgorithm(algo):
 
     afile.write("Total-"+algo+", , "+str(totalCost)+","+str(totalLengthOfSolution)+", "+str(totalLengthOfSearch)+", "+str(totalExecutionTime)+","+str(totalNoSolution)+"\n")
 
-    if(i != 0 and counter != 0):
-        averageCost = totalCost/counter
-        averageExecutionTime = totalExecutionTime/counter
+    if(i != 0):
+        averageCost = totalCost/i
+        averageExecutionTime = totalExecutionTime/i
         averageLengthOfSearch = totalLengthOfSearch/i
-        averageLengthOfSolution = totalLengthOfSolution/counter
+        averageLengthOfSolution = totalLengthOfSolution/i
         averageNoSolution = totalNoSolution/i
 
     afile.write("Average-"+algo+", , "+str(averageCost)+","+str(averageLengthOfSolution)+", "+str(averageLengthOfSearch)+", "+str(averageExecutionTime)+","+str(averageNoSolution)+"\n")
@@ -182,7 +181,7 @@ while choice != 'q':
     elif choice == '9':
         runAlgorithm(astarH3)
     elif choice == '10':
-        inputPath = "samplePuzzles.txt"
+        inputPath = "randomInput.txt"
         runAlgorithm(ucs)
         # runAlgorithm(gbfsH0)
         runAlgorithm(gbfsH1)
