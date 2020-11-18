@@ -146,7 +146,7 @@ astarH3 = "astarH3"
 
 print("Welcome to X-Puzzle")
 choice = ''; 
-
+# inputPath = "randomInput.txt"
 while choice != 'q':
     print("\nMake sure the samplePuzzles.txt file is the main directory ")
     print("\n[1] Enter 1 to solve the puzzle using uniform cost search. ")
@@ -158,7 +158,7 @@ while choice != 'q':
     print("[7] Enter 7 to solve the puzzle using A* with h1. (Hamming Distance) uses monotonic method")
     print("[8] Enter 8 to solve the puzzle using A* with h2. (Custom Manhattan)")
     print("[9] Enter 9 to solve the puzzle using A* with h3. (Sum of Permutation)")
-    print("[10] Enter 10 to run analysis on all search methods with h0, h1, h2 as heuristics using samplePuzzle.txt ")
+    print("[10] Enter 10 to run analysis on all search methods with h1, h2 as heuristics using samplePuzzle.txt ")
     print("[q] Enter q to quit. ")
 
     choice = input("\nHow would you like to solve the puzzle? ")

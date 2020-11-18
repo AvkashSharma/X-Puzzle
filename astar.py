@@ -96,7 +96,7 @@ class Astar:
 
             solutionPath.reverse()
             for i in solutionPath:
-                f.write(str(i.tileToMove)+" "+ str(i.g) +" "+common.stateToString(i.puzzle)+"\n")
+                f.write(str(i.tileToMove)+" "+ str(i.totalG) +" "+common.stateToString(i.puzzle)+"\n")
 
             f.write(str(self.closedList[len(self.closedList)-1].totalG) + " " + str(duration)+"\n")
             lengthOfSolution = len(solutionPath)
@@ -110,7 +110,7 @@ class Astar:
     def searchFile(self):
         f= open("output/{num}_astar-{h}_search.txt".format(num=self.puzzleNumber, h=self.heuristic),"w+")
         for i in self.closedList:
-            f.write(str(i.f)+" "+str(i.g)+" "+str(i.h)+" "+common.stateToString(i.puzzle)+'\n')
+            f.write(str(i.f)+" "+str(i.totalG)+" "+str(i.h)+" "+common.stateToString(i.puzzle)+'\n')
         f.close()
         return len(self.closedList)
 
