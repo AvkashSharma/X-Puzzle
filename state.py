@@ -4,7 +4,7 @@ import numpy as np
 class State:
     def __init__(self, input="", parent=None, puzzle=None, tileToMove = '0', f=0, g=0, totalG=0, h=0, heuristic="", goalState1=None, goalState2=None):
         self.row = 4
-        self.col = 3
+        self.col = 4
         self.f = f
         self.g = g
         self.totalG = totalG

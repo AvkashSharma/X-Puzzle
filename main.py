@@ -19,7 +19,7 @@ def generateRandomPuzzle():
     with open("randomInput.txt", "w") as file:
         for i in range(0, 5):
             print(i)
-            r = random.sample(range(12), 12)
+            r = random.sample(range(16), 16)
             file.write(common.stateToString(r)+"\n")
 
 
@@ -56,8 +56,8 @@ def runAlgorithm(algo):
     afile = open(analysisPath,"a")
     afile.write("\nAlgorithm, Puzzle, Cost, Length Of Solution, Length Of Search, Execution, No Solution, Optimality\n")
 
-    goalstate1 = "1 2 3 4 5 6 7 8 9 10 11 0"
-    goalstate2 = "1 5 9 2 6 10 3 7 11 4 8 0"
+    goalstate1 = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 0"
+    goalstate2 = "1 5 9 13 2 6 10 14 3 7 11 15 4 8 12 0"
 
     totalLengthOfSolution = 0
     totalLengthOfSearch = 0
